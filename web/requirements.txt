@@ -2,4 +2,4 @@ requests
 PyJWT
 flask
 flask_restful
-cryptography
+gunicorn

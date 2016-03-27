@@ -32,3 +32,7 @@ $ python app.py
 ```
 
 Open your favorite browser to http://localhost:5000/
+
+## Helpful Documentation
+
+- https://realpython.com/blog/python/dockerizing-flask-with-compose-and-machine-from-localhost-to-the-cloud/

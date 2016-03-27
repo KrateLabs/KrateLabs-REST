@@ -13,9 +13,12 @@ secret = os.environ.get('KRATELABS_SECRET', 'kratelabs')
 
 class Help(Resource):
     def get(self):
+        host = 'http://localhost:5000'
+        encode_example = '{}/encode?age=30&name=Denis'.format(host)
+        decode_example = '{}/decode?token'.format(host)
         return {'REST API': [
-                    {'/encode': {'arguments': ['age', 'name']}},
-                    {'/decode': {'arguments': ['payload']}}
+                    {'/encode': {'arguments': ['age', 'name'], 'example': encode_example}},
+                    {'/decode': {'arguments': ['token'], 'example': decode_example}}
                 ]}
 
 
@@ -33,15 +36,15 @@ class Encode(Resource):
 
 class Decode(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('payload', type=str, required=True, help='[Error] Must provide <payload> (string)')
+    parser.add_argument('payload', type=str, required=True, help='[Error] Must provide <token> (string)')
 
     def get(self):
         args = self.parser.parse_args()
         try:
-            decoded = jwt.decode(args['payload'], secret, algorithm='HS256')
+            decoded = jwt.decode(args['token'], secret, algorithm='HS256')
             return decoded
         except jwt.InvalidTokenError:
-            return {'message': {'error': 'Could not decode payload'}}, 403
+            return {'message': {'error': 'Could not decode <token>'}}, 403
 
 
 api.add_resource(Help, '/')
@@ -50,4 +53,4 @@ api.add_resource(Decode, '/decode')
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
