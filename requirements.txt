@@ -1,3 +1,4 @@
+requests
 PyJWT
 flask
 flask_restful

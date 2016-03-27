@@ -2,12 +2,13 @@
 # coding: utf8
 
 import jwt
+import os
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 
 app = Flask(__name__)
 api = Api(app)
-secret = 'kratelabs'
+secret = os.environ.get('KRATELABS_SECRET', 'kratelabs')
 
 
 class Help(Resource):
