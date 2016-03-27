@@ -1,0 +1,4 @@
+PyJWT
+flask
+flask_restful
+cryptography
