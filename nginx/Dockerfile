@@ -1,3 +1,4 @@
 FROM nginx:alpine
-RUN rm /etc/nginx/sites-enabled/default
-ADD sites-enabled/ /etc/nginx/sites-enabled
+MAINTAINER Denis Carriere - carriere.denis@gmail.com
+
+COPY nginx.conf /etc/nginx/nginx.conf

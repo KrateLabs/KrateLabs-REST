@@ -1,5 +1,5 @@
-requests
 PyJWT
 flask
 flask_restful
 gunicorn
+redis

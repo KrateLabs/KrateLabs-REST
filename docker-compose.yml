@@ -2,18 +2,25 @@ web:
   restart: always
   build: ./web
   expose:
-    - "8000"
-  env_file: .env
-  command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+    - 5000
+  ports:
+    - 5000:5000
+  links:
+     - redis:redis
+  command: gunicorn -w 4 -b :5000 app:app
 
 nginx:
   restart: always
-  build: ./nginx/
-  ports:
-    - "80:80"
+  image: nginx:alpine
   volumes:
-    - /www/static
-  volumes_from:
-    - web
+    - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  ports:
+    - 80:80
   links:
     - web:web
+
+redis:
+  restart: always
+  image: redis:alpine
+  ports:
+    - 6379:6379

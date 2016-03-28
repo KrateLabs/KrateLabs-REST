@@ -3,23 +3,21 @@
 
 import jwt
 import os
+from datetime import datetime, timedelta
+from redis import Redis
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 
 app = Flask(__name__)
 api = Api(app)
+redis = Redis(host='redis', port=6379)
 secret = os.environ.get('KRATELABS_SECRET', 'kratelabs')
 
 
 class Help(Resource):
     def get(self):
-        host = 'http://localhost:5000'
-        encode_example = '{}/encode?age=30&name=Denis'.format(host)
-        decode_example = '{}/decode?token'.format(host)
-        return {'REST API': [
-                    {'/encode': {'arguments': ['age', 'name'], 'example': encode_example}},
-                    {'/decode': {'arguments': ['token'], 'example': decode_example}}
-                ]}
+        redis.incr('hits')
+        return {'visits': int(redis.get('hits'))}
 
 
 class Encode(Resource):
@@ -29,19 +27,22 @@ class Encode(Resource):
 
     def get(self):
         args = self.parser.parse_args()
-        payload = {'age': args['age'], 'name': args['name']}
-        encoded = jwt.encode(payload, secret, algorithm='HS256')
-        return {'payload': encoded}
+        # Token expires in 24 hours
+        exp = datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
+        token = {'age': args['age'], 'name': args['name'], 'exp': exp}
+        encoded = jwt.encode(token, secret, algorithm='HS256')
+        return {'token': encoded}
 
 
 class Decode(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('payload', type=str, required=True, help='[Error] Must provide <token> (string)')
+    parser.add_argument('token', type=str, required=True, help='[Error] Must provide <token> (string)')
 
     def get(self):
         args = self.parser.parse_args()
         try:
             decoded = jwt.decode(args['token'], secret, algorithm='HS256')
+            del decoded['exp']
             return decoded
         except jwt.InvalidTokenError:
             return {'message': {'error': 'Could not decode <token>'}}, 403
