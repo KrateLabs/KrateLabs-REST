@@ -3,24 +3,6 @@ web:
   build: ./web
   expose:
     - 5000
-  links:
-    - redis:redis
-  command: gunicorn -w 4 -b :5000 app:app
-
-nginx:
-  restart: always
-  image: nginx:alpine
-  volumes:
-    - ./nginx:/etc/nginx
-    - /etc/letsencrypt:/etc/letsencrypt
   ports:
-    - 80:80
-    - 443:443
-  links:
-    - web:web
-
-redis:
-  restart: always
-  image: redis:alpine
-  expose:
-    - 6379
+    - 5000:5000
+  # command: gunicorn -w 4 -b :5000 app:app

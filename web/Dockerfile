@@ -1,4 +1,4 @@
-FROM python:alpine
+FROM python:2-alpine
 MAINTAINER Denis Carriere - carriere.denis@gmail.com
 
 # Install app dependencies
@@ -8,3 +8,4 @@ RUN pip install -r requirements.txt
 
 # Run App
 ADD . /src
+CMD python app.py
