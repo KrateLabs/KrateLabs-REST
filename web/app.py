@@ -1,23 +1,17 @@
 #!/usr/bin/python
 # coding: utf8
 
+import json
+import subprocess
 import jwt
 import os
 from datetime import datetime, timedelta
-from redis import Redis
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 
 app = Flask(__name__)
 api = Api(app)
-redis = Redis(host='redis', port=6379)
 secret = os.environ.get('KRATELABS_SECRET', 'kratelabs')
-
-
-class Help(Resource):
-    def get(self):
-        redis.incr('hits')
-        return {'visits': int(redis.get('hits'))}
 
 
 class Encode(Resource):
@@ -34,23 +28,41 @@ class Encode(Resource):
         return {'token': encoded}
 
 
-class Decode(Resource):
+class Product(Resource):
     parser = reqparse.RequestParser()
-    parser.add_argument('token', type=str, required=True, help='[Error] Must provide <token> (string)')
+    parser.add_argument('access_token', type=str, required=True, help='[Error] Must provide <access_token> (str)')
+    parser.add_argument('lat', type=float, required=True, help='[Error] Must provide <lat> (float)')
+    parser.add_argument('lng', type=float, required=True, help='[Error] Must provide <lng> (float)')
+    parser.add_argument('zoom', type=float, required=True, help='[Error] Must provide <zoom> (float)')
+    parser.add_argument('bearing', type=int, required=True, help='[Error] Must provide <bearing> (int)')
+    parser.add_argument('pitch', type=int, required=True, help='[Error] Must provide <pitch> (int)')
+    parser.add_argument('email', type=str, required=True, help='[Error] Must provide <email> (str)')
+    parser.add_argument('name', type=str, required=True, help='[Error] Must provide <name> (str)')
+
+    def post(self):
+        args = self.parser.parse_args()
+        command = [
+            'kratelabs',
+            '--zoom', str(args['zoom']),
+            '--lat', str(args['lat']),
+            '--lng', str(args['lng']),
+            '--bearing', str(args['bearing']),
+            '--pitch', str(args['pitch']),
+            '--filename', args['name'],
+            '--folder', args['email'],
+            '--upload',
+            '--delete'
+        ]
+        call = subprocess.check_output(command)
+        return json.loads(call)
 
     def get(self):
         args = self.parser.parse_args()
-        try:
-            decoded = jwt.decode(args['token'], secret, algorithm='HS256')
-            del decoded['exp']
-            return decoded
-        except jwt.InvalidTokenError:
-            return {'message': {'error': 'Could not decode <token>'}}, 403
+        return args
 
 
-api.add_resource(Help, '/')
 api.add_resource(Encode, '/encode')
-api.add_resource(Decode, '/decode')
+api.add_resource(Product, '/product')
 
 
 if __name__ == "__main__":
