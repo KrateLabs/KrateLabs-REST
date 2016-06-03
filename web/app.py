@@ -14,6 +14,14 @@ api = Api(app)
 secret = os.environ.get('KRATELABS_SECRET', 'kratelabs')
 
 
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,Access-Control-Allow-Origin,Accept,Cache-Control')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    return response
+
+
 class Encode(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument('age', type=int, required=True, help='[Error] Must provide <age> (int)')
@@ -39,6 +47,23 @@ class Product(Resource):
     parser.add_argument('email', type=str, required=True, help='[Error] Must provide <email> (str)')
     parser.add_argument('name', type=str, required=True, help='[Error] Must provide <name> (str)')
 
+    def get(self):
+        args = self.parser.parse_args()
+        command = [
+            'kratelabs',
+            '--zoom', str(args['zoom']),
+            '--lat', str(args['lat']),
+            '--lng', str(args['lng']),
+            '--bearing', str(args['bearing']),
+            '--pitch', str(args['pitch']),
+            '--filename', args['name'],
+            '--folder', args['email'],
+            '--upload',
+            '--delete'
+        ]
+        call = subprocess.check_output(command)
+        return json.loads(call)
+
     def post(self):
         args = self.parser.parse_args()
         command = [
@@ -56,14 +81,10 @@ class Product(Resource):
         call = subprocess.check_output(command)
         return json.loads(call)
 
-    def get(self):
-        args = self.parser.parse_args()
-        return args
-
 
 api.add_resource(Encode, '/encode')
 api.add_resource(Product, '/product')
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

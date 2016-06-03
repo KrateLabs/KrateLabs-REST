@@ -10,9 +10,9 @@ def test_product():
         'bearing': 0,
         'pitch': 0,
         'email': 'carriere.denis@gmail.com',
-        'name': 'Cool File2'
+        'name': 'Cool File'
     }
-    r = requests.post('http://localhost:5000/product', data=payload)
+    r = requests.post('http://requestb.in/qcird0qc', data=payload)
     print(r.json())
 
 
