@@ -8,4 +8,5 @@ RUN npm install
 
 # Run App
 ADD . /src
+ENV PORT 5000
 CMD npm start

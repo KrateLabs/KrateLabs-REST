@@ -1,8 +1,9 @@
 import humps, { camelizeKeys, decamelizeKeys, decamelize } from 'humps'
+import { Promise } from 'es6-promise'
 import fetch from 'isomorphic-fetch'
 import FormData from 'form-data'
 
-export function loadFormData(payload) {
+function loadFormData(payload) {
   if (!payload) return undefined
   let data = new FormData()
   Object.keys(payload).map((key) => {
@@ -11,7 +12,7 @@ export function loadFormData(payload) {
   return data
 }
 
-export function loadFormUrlencoded(payload) {
+function loadFormUrlencoded(payload) {
   if (!payload) return undefined
   let data = []
   Object.keys(payload).map((key) => {
@@ -20,7 +21,21 @@ export function loadFormUrlencoded(payload) {
   return data.join('&')
 }
 
-export default function request({ url, endpoint=null, method='get', data=null, params=null } = {}) {
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  } else {
+    var error = new Error(response.statusText)
+    error.response = response
+    throw error
+  }
+}
+
+function parseJSON(response) {
+  return response.json()
+}
+
+function request({ url, endpoint=null, method='get', data=null, params=null } = {}) {
   if (endpoint) url += `${ endpoint }`
   if (params) url += `?${ loadFormUrlencoded(params) }`
 
@@ -35,17 +50,15 @@ export default function request({ url, endpoint=null, method='get', data=null, p
     body: loadFormUrlencoded(data)
   }
   return fetch(url, options)
-    .then(response => {
-      if (!response.ok) { return Promise.reject('Connection Issue') }
-      return response
-    })
+    .then(checkStatus)
+    .then(parseJSON)
     .then(
-      response => ({ response }),
+      data => ({ data }),
       error => ({ error })
     )
 }
 
-export default class Api {
+export default class Request {
   constructor(url) {
     this.url = url
   }
@@ -64,9 +77,10 @@ export default class Api {
 }
 
 if (require.main === module) {
-  const api = new Api('http://requestb.in/10lz7of1')
+  const api = new Request('http://localhost:5000/user')
   api.get('', {hello: 'world'})
-    .then(({ response, error }) => {
-      console.log(response.statusText)
+    .then(({ data, error }) => {
+      console.log(data)
+      console.log(error)
     })
 }

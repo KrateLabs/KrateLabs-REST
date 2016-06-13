@@ -27,7 +27,8 @@ router.route('/')
       if (!users) return response.json({
         status: 404,
         ok: false,
-        message: `Users cannot be found`
+        message: 'Users not found',
+        error: 'Users not found'
       })
       response.json({
         status: 200,
@@ -61,12 +62,19 @@ router.route('/')
 router.route('/:user_id')
   .get((request, response) => {
     // Returns a single users
-    User.findOne({name: request.params.user_id}, 'name', (error, user) => {
+    let name = request.params.user_id
+    User.findOne({name: name}, 'name', (error, user) => {
       if (error) return response.json({
         status: 500,
         ok: false,
         message: 'Error retrieving user',
         error: error
+      })
+      if (!user) return response.json({
+        status: 404,
+        ok: false,
+        message: `User [${ name }] was not found`,
+        error: 'User not found',
       })
       response.json({
         status: 200,
