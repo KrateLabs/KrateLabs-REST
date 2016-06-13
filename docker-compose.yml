@@ -1,8 +1,8 @@
 web:
   restart: always
-  build: ./web
+  build: .
   expose:
-    - 5000
+    - 8080
   ports:
-    - 5000:5000
-  # command: gunicorn -w 4 -b :5000 app:app
+    - 8080:8080
+  command: babel-node ./app/server.js

@@ -7,8 +7,8 @@
     "test": "tests"
   },
   "scripts": {
-    "start": "babel-node server.js",
-    "test": "ava"
+    "start": "./node_modules/.bin/babel-node server.js",
+    "test": "NODE_PATH=app ./node_modules/.bin/ava --verbose"
   },
   "repository": {
     "type": "git",
@@ -22,30 +22,33 @@
   "homepage": "https://github.com/KrateLabs/KrateLabs-REST#readme",
   "dependencies": {
     "body-parser": "^1.15.1",
+    "core-js": "^2.4.0",
     "express": "^4.13.4",
+    "form-data": "^1.0.0-rc4",
+    "humps": "^1.1.0",
+    "isomorphic-fetch": "^2.2.1",
     "mongoose": "^4.4.20"
   },
   "devDependencies": {
     "ava": "^0.15.2",
+    "babel-cli": "^6.10.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-runtime": "^6.9.0",
     "babel-preset-es2015": "^6.9.0",
-    "babel-preset-stage-0": "^6.5.0"
+    "babel-preset-stage-0": "^6.5.0",
+    "nock": "^8.0.0"
   },
   "ava": {
     "files": [
-      "tests/*.js"
+      "test/*.js"
     ],
-    "source": [
-      "**/*.{js,jsx}",
-      "!dist/**/*"
-    ],
+    "babel": "inherit",
     "concurrency": 5,
     "failFast": true,
     "tap": true,
     "require": [
-      "babel-register"
-    ],
-    "babel": "inherit"
+      "babel-register",
+      "ignore-styles"
+    ]
   }
 }

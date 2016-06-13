@@ -23,4 +23,4 @@ app.use('/user', routes.user)
 app.use('/product', routes.product)
 
 app.listen(port)
-console.log('Magic happens on port ' + port)
+console.log('Kratelabs API listening on port ' + port)
