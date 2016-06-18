@@ -6,8 +6,8 @@ import models from './app/models'
 
 // Set up Server
 const app = express()
-app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // Server Config
 const port = process.env.PORT || 8080

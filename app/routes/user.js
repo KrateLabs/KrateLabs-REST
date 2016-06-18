@@ -1,9 +1,12 @@
 import express from 'express'
 import { User, Log } from '../models'
+import multer from 'multer'
 
-let router = express.Router()
+const router = express.Router()
+// Adds handling for multipart/form-data
+const upload = multer({ dest: 'uploads/' })
 
-router.use((request, response, next) => {
+router.use(upload.array(), (request, response, next) => {
   let log = new Log()
   log.ip = request.connection.remoteAddress
   log.method = request.method

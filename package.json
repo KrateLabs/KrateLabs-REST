@@ -27,7 +27,8 @@
     "form-data": "^1.0.0-rc4",
     "humps": "^1.1.0",
     "isomorphic-fetch": "^2.2.1",
-    "mongoose": "^4.4.20"
+    "mongoose": "^4.4.20",
+    "multer": "^1.1.0"
   },
   "devDependencies": {
     "ava": "^0.15.2",
