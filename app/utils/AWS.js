@@ -85,10 +85,12 @@ export default class S3 {
 }
 
 if (require.main === module) {
-  const aws = new AWS.S3({ bucket: 's3://addxy.com', recursive: true })
-
-  aws.rm({ path: '/test' })
-  aws.ls({ path: '/test' })
-  aws.cp({ source: 'nginx', target: 's3://addxy.com/test', publicReadWrite: true })
-
+  const aws = new AWS.S3({ bucket: 's3://kratelabs.com', recursive: true })
+  //aws.rm({ path: '/test' })
+  //aws.ls({ path: '/test' })
+  aws.cp({ source: './uploads/products/12345', target: 's3://kratelabs.com/products/12345', publicReadWrite: true })
+    .then(
+      data => console.log(data),
+      error => console.log(error)
+    )
 }
