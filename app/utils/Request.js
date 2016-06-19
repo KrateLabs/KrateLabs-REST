@@ -16,7 +16,7 @@ function loadFormUrlencoded(payload) {
   if (!payload) return undefined
   let data = []
   Object.keys(payload).map((key) => {
-    data.push(`${ key }=${ payload[key] }`)
+    data.push(`${ key }=${ JSON.stringify(payload[key]) }`)
   })
   return data.join('&')
 }
@@ -35,52 +35,46 @@ function parseJSON(response) {
   return response.json()
 }
 
-function request({ url, endpoint=null, method='get', data=null, params=null } = {}) {
+function request(url, { endpoint=null, method='get', data=null, params=null } = {}) {
   if (endpoint) url += `${ endpoint }`
   if (params) url += `?${ loadFormUrlencoded(params) }`
 
   let headers = new Headers({
     'Accept': 'application/json',
-    'Content-Type': 'application/x-www-form-urlencoded',
+    'Content-Type': 'application/json',
     'Cache-Control': 'no-cache'
   })
   let options = {
     headers: headers,
     method: method,
-    body: loadFormUrlencoded(data)
+    credentials: 'include',
+    mode: 'cors',
+    body: JSON.stringify(data)
   }
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON)
-    .then(
-      data => ({ data }),
-      error => ({ error })
-    )
 }
 
 export default class Request {
-  constructor(url) {
-    this.url = url
+  static get(url, params) {
+    return request(url, { method: 'get', params: params })
   }
-  get(endpoint, params) {
-    return request({url: this.url, endpoint: endpoint, method: 'get', params: params})
+  static post(url, payload) {
+    return request(url, { method: 'post', data: payload })
   }
-  post(endpoint, payload) {
-    return request({url: this.url, endpoint: endpoint, method: 'post', data: payload})
+  static put(url, payload) {
+    return request(url, { method: 'put', data: payload })
   }
-  put(endpoint, payload) {
-    return request({url: this.url, endpoint: endpoint, method: 'put', data: payload})
-  }
-  delete(endpoint, payload) {
-    return request({url: this.url, endpoint: endpoint, method: 'delete', data: payload})
+  static delete(url, payload) {
+    return request(url, { method: 'delete', data: payload })
   }
 }
 
 if (require.main === module) {
-  const api = new Request('http://localhost:5000/user')
-  api.get('', {hello: 'world'})
-    .then(({ data, error }) => {
-      console.log(data)
-      console.log(error)
-    })
+  Request.get('http://localhost:8000/product', { hello: 'world' })
+    .then(
+      data => console.log(data),
+      error => console.log(error)
+    )
 }

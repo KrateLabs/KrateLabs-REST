@@ -21,13 +21,13 @@ router.route('/')
   .get((request, response) => {
     // Returns all users as a list
     User.find({}, 'name', (error, users) => {
-      if (error) return response.json({
+      if (error) return response.status(500).json({
         status: 500,
         ok: false,
         message: 'Error retrieving multiple users',
         error: error
       })
-      if (!users) return response.json({
+      if (!users) return response.status(404).json({
         status: 404,
         ok: false,
         message: 'Users not found',
@@ -45,7 +45,7 @@ router.route('/')
     let user = new User(request.body)
 
     user.save(error => {
-      if (error) return response.json({
+      if (error) return response.status(500).json({
         status: 500,
         ok: false,
         message: 'Error creating user',
@@ -65,13 +65,13 @@ router.route('/:user_id')
     // Returns a single users
     let name = request.params.user_id
     User.findOne({name: name}, 'name', (error, user) => {
-      if (error) return response.json({
+      if (error) return response.status(500).json({
         status: 500,
         ok: false,
         message: 'Error retrieving user',
         error: error
       })
-      if (!user) return response.json({
+      if (!user) return response.status(404).json({
         status: 404,
         ok: false,
         message: `User [${ name }] was not found`,
@@ -90,7 +90,7 @@ router.route('/:user_id')
     let name = request.params.user_id
     User.findOne({name: name}, 'name')
       .then(user => {
-        if (!user) return response.json({
+        if (!user) return response.status(404).json({
           status: 404,
           ok: false,
           message: `User ${ name } cannot be found`

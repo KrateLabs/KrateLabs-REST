@@ -43,7 +43,7 @@ router.route('/')
     if (!product.id) { product.id = product._id }
 
     product.save(error => {
-      if (error) return response.json({
+      if (error) return response.status(500).json({
         status: 500,
         ok: false,
         message: 'Error creating product',
@@ -63,14 +63,14 @@ router.route('/:product_id')
   .get((request, response) => {
     let product_id = request.params.product_id
     Product.findOne({ id: product_id }, { _id: 0, __v: 0 }, (error, product) => {
-      if (error) return response.json({
+      if (error) return response.status(500).json({
         status: 500,
         ok: false,
         id: product_id,
         message: 'Error retrieving product',
         error: error
       })
-      if (!product) return response.json({
+      if (!product) return response.status(404).json({
         status: 404,
         ok: false,
         id: product_id,
@@ -90,7 +90,7 @@ router.route('/:product_id')
     let product_id = request.params.product_id
     Product.findOne({id: product_id})
       .then(product => {
-        if (!product) return response.json({
+        if (!product) return response.status(404).json({
           status: 404,
           ok: false,
           id: product_id,
@@ -109,7 +109,7 @@ router.route('/:product_id')
   .post((request, response) => {
     let product_id = request.params.product_id
     Product.update({id: product_id}, request.body, (error, product) => {
-      if (!product.ok) return response.json({
+      if (!product.ok) return response.status(400).json({
         status: 400,
         ok: false,
         id: product_id,
@@ -117,14 +117,14 @@ router.route('/:product_id')
         message: 'Error updating product with payload',
         error: 'Error updating product'
       })
-      if (!!!product.n) return response.json({
+      if (!!!product.n) return response.status(404).json({
         status: 404,
         ok: false,
         id: product_id,
         message: `Product cannot be found`,
         error: `Product cannot be found`
       })
-      if (error) return response.json({
+      if (error) return response.status(500).json({
         status: 500,
         ok: false,
         id: product_id,

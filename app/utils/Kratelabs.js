@@ -68,7 +68,7 @@ if (require.main === module) {
     lng: -75.123,
     zoom: 10,
     bearing: 0,
-    pitch: 0,
+    pitch: 0
   }).then(
     data => console.log(data),
     error => console.log(error)
