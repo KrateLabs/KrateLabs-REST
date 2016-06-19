@@ -27,6 +27,7 @@ router.route('/')
       api: 'Product',
       ok: true,
       status: 200,
+      message: 'Demonstrates the Product API',
       http: [
         { url: '/product', method: 'GET'},
         { url: '/product', method: 'POST', fields: ['lat', 'lng', 'zoom', 'bearing', 'pitch', 'email', 'location']},
@@ -52,7 +53,7 @@ router.route('/')
         status: 200,
         ok: true,
         id: product.id,
-        message: `Product is created!`,
+        message: `Product created`,
         url: `/product/${ product.id }`
       })
     })
@@ -73,8 +74,8 @@ router.route('/:product_id')
         status: 404,
         ok: false,
         id: product_id,
-        message: `Product was not found`,
-        error: 'Product not found',
+        message: `Product cannot be found`,
+        error: 'Product cannot be found',
       })
       response.json({
         status: 200,
@@ -93,15 +94,51 @@ router.route('/:product_id')
           status: 404,
           ok: false,
           id: product_id,
-          message: `Product cannot be found`
+          message: `Product cannot be found`,
+          error: `Product cannot be found`
         })
         product.remove((error, removed) => response.json({
           status: 200,
           ok: true,
           id: product_id,
-          message: `Product is removed`
+          message: `Product removed`
         }))
       })
+    })
+
+  .post((request, response) => {
+    let product_id = request.params.product_id
+    Product.update({id: product_id}, request.body, (error, product) => {
+      if (!product.ok) return response.json({
+        status: 400,
+        ok: false,
+        id: product_id,
+        payload: request.body,
+        message: 'Error updating product with payload',
+        error: 'Error updating product'
+      })
+      if (!!!product.n) return response.json({
+        status: 404,
+        ok: false,
+        id: product_id,
+        message: `Product cannot be found`,
+        error: `Product cannot be found`
+      })
+      if (error) return response.json({
+        status: 500,
+        ok: false,
+        id: product_id,
+        message: 'Error updating product',
+        error: error
+      })
+      response.json({
+        status: 200,
+        ok: true,
+        id: product_id,
+        payload: request.body,
+        message: 'Product updated'
+      })
+    })
   })
 
 export default router
