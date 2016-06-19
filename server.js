@@ -10,7 +10,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 // Server Config
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 8000
 const router = express.Router()
 const mongodb = process.env.MONGODB || 'mongodb://kratelabs:kratelabs@ds023052.mlab.com:23052/kratelabs'
 
