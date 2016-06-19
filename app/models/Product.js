@@ -1,14 +1,35 @@
 import mongoose, { Schema } from 'mongoose'
 
 let schema = new Schema({
-  lat: Number,
-  lng: Number,
-  zoom: Number,
+  lat: {
+    type: Number,
+    required: 'Latitude [lat] is required'
+  },
+  lng: {
+    type: Number,
+    required: 'Longitude [lng] is required'
+  },
+  zoom: {
+    type: Number,
+    required: 'Zoom is required'
+  },
   bearing: Number,
   pitch: Number,
-  email: String,
-  location: String,
-  name: String
+  email: {
+    type: String,
+    required: 'Email address is required',
+    lowercase: true,
+    trim: true,
+    index: true
+  },
+  location: {
+    type: String,
+    trim: true
+  },
+  id: {
+    type: String,
+    index: { unique: true }
+  }
 })
 
 export default mongoose.model('Product', schema)

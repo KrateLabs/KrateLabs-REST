@@ -1,0 +1,200 @@
+{
+	"id": "8b7f42a0-d380-4178-e3e5-fa32ea62826c",
+	"name": "Kratelabs",
+	"description": "",
+	"order": [
+		"9a1dd941-4fd7-7ca3-3d10-d62c3cdc8b04",
+		"ff19df71-9005-acdc-06a7-91805e9d1f1a",
+		"01c6001b-b621-1682-9a03-2c1ddcf457c2",
+		"99638150-2c7a-62fc-183e-2362c9c3287c",
+		"7a199a9c-dee2-477d-2aa4-67733001961b"
+	],
+	"folders": [],
+	"timestamp": 1466264645093,
+	"owner": "685031",
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "01c6001b-b621-1682-9a03-2c1ddcf457c2",
+			"headers": "",
+			"url": "http://localhost:8080/product/12345",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466348546284,
+			"name": "Get Product",
+			"description": "Get Product",
+			"collectionId": "8b7f42a0-d380-4178-e3e5-fa32ea62826c",
+			"responses": []
+		},
+		{
+			"id": "7a199a9c-dee2-477d-2aa4-67733001961b",
+			"headers": "",
+			"url": "http://localhost:8080/product/12345",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === false;\ntests[\"Status\"] = jsonData.status === 404;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466348076450,
+			"name": "Get Product (not found)",
+			"description": "Get Product (not found)",
+			"collectionId": "8b7f42a0-d380-4178-e3e5-fa32ea62826c",
+			"responses": []
+		},
+		{
+			"id": "99638150-2c7a-62fc-183e-2362c9c3287c",
+			"headers": "",
+			"url": "http://localhost:8080/product/12345",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466348083205,
+			"name": "Delete Product",
+			"description": "Delete Product",
+			"collectionId": "8b7f42a0-d380-4178-e3e5-fa32ea62826c",
+			"responses": []
+		},
+		{
+			"id": "9a1dd941-4fd7-7ca3-3d10-d62c3cdc8b04",
+			"headers": "",
+			"url": "http://localhost:8080/product",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "lat",
+					"value": "43.64305",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "lng",
+					"value": "-79.37412",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "zoom",
+					"value": "12.0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "bearing",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "pitch",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "carriere.denis@gmail.com",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466348092492,
+			"name": "Get Product Schema",
+			"description": "Get Product Schema",
+			"collectionId": "8b7f42a0-d380-4178-e3e5-fa32ea62826c",
+			"responses": []
+		},
+		{
+			"id": "ff19df71-9005-acdc-06a7-91805e9d1f1a",
+			"headers": "",
+			"url": "http://localhost:8080/product",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "lat",
+					"value": "43.64305",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "lng",
+					"value": "-79.37412",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "zoom",
+					"value": "12.0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "bearing",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "pitch",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "carriere.denis@gmail.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "location",
+					"value": "Ottawa, ON",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "id",
+					"value": "12345",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466348483884,
+			"name": "Create Product (form-data)",
+			"description": "Create Product (form-data)",
+			"collectionId": "8b7f42a0-d380-4178-e3e5-fa32ea62826c",
+			"responses": []
+		}
+	]
+}

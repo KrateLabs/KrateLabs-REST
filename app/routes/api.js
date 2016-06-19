@@ -1,6 +1,6 @@
 import express from 'express'
 
-let router = express.Router()
+const router = express.Router()
 
 // Routes
 router.use((req, res, next) => {

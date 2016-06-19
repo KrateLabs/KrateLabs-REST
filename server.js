@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // Server Config
 const port = process.env.PORT || 8080
 const router = express.Router()
-const mongodb = process.env.MONGODB || 'mongodb://kratelabs:kratelabs@ds013414.mlab.com:13414/kratelabs'
+const mongodb = process.env.MONGODB || 'mongodb://kratelabs:kratelabs@ds023052.mlab.com:23052/kratelabs'
 
 // Set up Database
 mongoose.connect(mongodb)

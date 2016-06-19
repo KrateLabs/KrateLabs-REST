@@ -2,9 +2,9 @@ import express from 'express'
 import { User, Log } from '../models'
 import multer from 'multer'
 
-const router = express.Router()
 // Adds handling for multipart/form-data
 const upload = multer({ dest: 'uploads/' })
+const router = express.Router()
 
 router.use(upload.array(), (request, response, next) => {
   let log = new Log()
@@ -43,9 +43,7 @@ router.route('/')
 
   .post((request, response) => {
     // Creates a user
-    let user = new User()
-    user.name = request.body.name
-    user.email = request.body.email
+    let user = new User(request.body)
 
     user.save(error => {
       if (error) return response.json({
@@ -57,6 +55,7 @@ router.route('/')
       response.json({
         status: 200,
         ok: true,
+        id: user.email,
         message: `User ${ user.name } is created!`
       })
     })
