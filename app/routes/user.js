@@ -42,7 +42,6 @@ router.route('/')
   })
 
   .post((request, response) => {
-    // Creates a user
     let user = new User(request.body)
 
     user.save(error => {

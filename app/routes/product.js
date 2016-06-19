@@ -1,11 +1,11 @@
 import express from 'express'
 import multer from 'multer'
 import { exec } from 'child_process'
-import AWS from 'aws-sdk'
 import { Product, Log } from '../models'
+import AWS from 'aws-sdk'
 
 
-// Adds handling for multipart/form-data
+// Handles multipart/form-data
 const upload = multer({ dest: 'uploads/' })
 const router = express.Router()
 
