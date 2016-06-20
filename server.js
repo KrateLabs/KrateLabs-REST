@@ -8,6 +8,7 @@ import models from './app/models'
 // Set up Server
 const app = express()
 app.use(bodyParser.json())
+app.set('json spaces', 2)
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(stormpath.init(app, {
   web: {
