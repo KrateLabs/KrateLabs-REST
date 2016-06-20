@@ -27,7 +27,7 @@ const mongodb = process.env.MONGODB || 'mongodb://kratelabs:kratelabs@ds023052.m
 mongoose.connect(mongodb)
 
 // Register Routes
-app.use('/api', routes.api)
+app.use('/', routes.api)
 app.use('/user', routes.user)
 app.use('/product', routes.product)
 

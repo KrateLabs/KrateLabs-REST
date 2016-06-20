@@ -9,7 +9,7 @@ router.use((req, res, next) => {
 })
 
 router.get('/', (req, res) => {
-  res.json({ message: 'hooray! welcome to our api!'})
+  res.json({ message: 'Welcome to Kratelabs\'s api!'})
 })
 
 router.get('/help', (req, res) => {
