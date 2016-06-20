@@ -8,7 +8,7 @@ const router = express.Router()
 
 router.use(upload.array(), (request, response, next) => {
   let log = new Log()
-  log.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  log.ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress
   log.method = request.method
   log.url = request.originalUrl
   log.body = request.body
