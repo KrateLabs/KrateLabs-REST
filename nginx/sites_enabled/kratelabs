@@ -1,17 +1,14 @@
-# https://devcenter.heroku.com/articles/ssl-certificate-self
-
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
 
-    server_name localhost;
-    charset utf-8;
+    server_name api.kratelabs.addxy.com;
 
-    ssl_certificate     /etc/nginx/ssl/fullchain.pem;
-    ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/api.kratelabs.addxy.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/api.kratelabs.addxy.com/privkey.pem;
 
     location / {
-        proxy_pass http://web:5000/;
+        proxy_pass http://127.0.0.1:5000/;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -19,6 +16,14 @@ server {
 }
 
 server {
-    server_name localhost;
-    return 301 https://localhost$request_uri;
+    server_name www.api.kratelabs.addxy.com api.kratelabs.addxy.com;
+    return 301 https://api.kratelabs.addxy.com$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    server_name www.api.kratelabs.addxy.com;
+    return 301 https://api.kratelabs.addxy.com$request_uri;
 }
