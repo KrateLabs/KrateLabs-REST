@@ -1,13 +1,13 @@
 import user from './user'
 import api from './api'
 import product from './product'
-import log from './log'
+import token from './token'
 
 const routes = {
   user: user,
   api: api,
   product: product,
-  log: log
+  token: token
 }
 
 export default routes

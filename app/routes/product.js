@@ -1,14 +1,12 @@
 import express from 'express'
-import multer from 'multer'
 import { exec } from 'child_process'
 import AWS from 'aws-sdk'
-import { Product, Log } from '../models'
+import { Product } from '../models'
 
 const router = express.Router()
 
 router.route('/')
   .get((request, response) => {
-    let product = new Product()
     response.json({
       api: 'Product',
       ok: true,

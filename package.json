@@ -36,7 +36,8 @@
     "mongoose": "^4.4.20",
     "multer": "^1.1.0",
     "stormpath": "^0.18.2",
-    "utf8": "^2.1.1"
+    "utf8": "^2.1.1",
+    "validator": "^5.4.0"
   },
   "devDependencies": {
     "ava": "^0.15.2",

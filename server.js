@@ -41,6 +41,7 @@ app.use(upload.array(), (request, response, next) => {
 // Register Routes
 app.use('/', routes.api)
 app.use('/user', routes.user)
+app.use('/token', routes.token)
 app.use('/product', routes.product)
 
 app.on('stormpath.ready', () => {

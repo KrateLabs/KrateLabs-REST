@@ -1,6 +1,5 @@
 import express from 'express'
-import { User, Log } from '../models'
-import multer from 'multer'
+import { User } from '../models'
 
 const router = express.Router()
 
