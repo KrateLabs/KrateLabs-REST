@@ -4,6 +4,7 @@ api:
   environment:
     - PORT=5000
     - MONGODB=mongodb://kratelabs:kratelabs@ds013414.mlab.com:13414/kratelabs
+    - SECRET=default
   expose:
     - 5000
   ports:
