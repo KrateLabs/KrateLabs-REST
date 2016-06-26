@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
+import _ from 'lodash'
 import validator from 'validator'
 
 let schema = new Schema({
@@ -25,7 +26,11 @@ schema.path('email').validate((email) => {
 }, 'Email is not valid')
 
 schema.path('email').validate((email) => {
-  return !/@hotmail.com/.test(email)
-}, 'Must not be @hotmail.com')
+  return !/@aol.com/.test(email)
+}, 'Must not be @aol.com')
+
+schema.path('grant_type').validate((grant_type) => {
+  return ['client_credentials'].indexOf(grant_type) !== -1
+}, 'Invalid [grant_type]')
 
 export default mongoose.model('Token', schema)

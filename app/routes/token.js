@@ -1,20 +1,15 @@
+import _ from 'lodash'
+import { Base64 } from 'js-base64'
 import express from 'express'
+import jwt from 'express-jwt'
+import { sign } from 'jsonwebtoken'
 import { secret } from '../../config'
 import { Token } from '../models'
-import { sign } from 'jsonwebtoken'
-import jwt from 'express-jwt'
 
 const router = express.Router()
 
-router.route('/')
-  .get(jwt({ secret: secret }), (request, response) => {
-    if (Math.floor(Date.now() / 1000) > request.user.iat) {
-      return response.status(401).json({
-        ok: false,
-        status: 401,
-        message: 'Token Expired'
-      })
-    }
+router.route('/validate')
+  .get(jwt({ secret: secret, issuer: 'https://api.kratelabs.com' }), (request, response) => {
     return response.json({
       ok: true,
       status: 200,
@@ -24,30 +19,57 @@ router.route('/')
     })
   })
 
+// Validate Authorization
+router.route('/')
+  .post((request, response, next) => {
+    if (!request.headers.authorization) {
+      return response.status(401).json({
+        ok: false,
+        status: 401,
+        message: 'Must provide Authorization'
+      })
+    }
+    let [scheme, credentials] = request.headers.authorization.split(' ')
+    if (!/^Basic$/i.test(scheme)) {
+      return response.status(401).json({
+        ok: false,
+        status: 401,
+        message: 'Must provide Basic Authorization'
+      })
+    }
+    let [username, password] = Base64.decode(credentials).split(':')
+    if (username != 'Kratelabs' || password != 'Kratelabs') {
+      return response.status(401).json({
+        ok: false,
+        status: 401,
+        message: 'Invalid Credentials'
+      })
+    }
+    next()
+  })
+
+router.route('/')
   .post((request, response) => {
     let token = new Token(request.body)
     let error = token.validateSync()
-    if (error) { return response.status(400).json(error) }
+    if (error) { return response.status(400).json(_.assignIn(error, { ok: false, status: 400 })) }
 
     if (token.grant_type == 'client_credentials') {
       let payload = {
         user: token.user || 'Anonymous',
-        email: token.email || '',
-        iat: Math.floor(Date.now() / 1000) + 60 * 60 * 24
+        email: token.email || ''
+      }
+      let options = {
+        expiresIn: '365 days',
+        issuer: 'https://api.kratelabs.com'
       }
       return response.json({
         status: 200,
         ok: true,
-        token: sign(payload, secret),
+        token: sign(payload, secret, options),
         message: 'Generated Token'
       })
     }
-    return response.status(400).json({
-      status: 400,
-      ok: false,
-      message: 'Invalid [grant_type]',
-      error: 'Invalid [grant_type]'
-    })
   })
 
 export default router

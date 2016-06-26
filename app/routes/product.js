@@ -1,6 +1,8 @@
 import express from 'express'
 import { exec } from 'child_process'
 import AWS from 'aws-sdk'
+import jwt from 'express-jwt'
+import { secret } from '../../config'
 import { Product } from '../models'
 
 const router = express.Router()
@@ -22,8 +24,14 @@ router.route('/')
     })
   })
 
-  .post((request, response) => {
+  .post(jwt({ secret: secret, issuer: 'https://api.kratelabs.com' }), (request, response) => {
+    if (!request.user.email) return res.sendStatus(401)
+
     let product = new Product(request.body)
+    let error = product.validateSync()
+    if (error) { return response.status(400).json(_.assignIn(error, { ok: false, status: 400 })) }
+
+    // Use MongoDB ID by fallback
     if (!product.id) { product.id = product._id }
 
     product.save(error => {
@@ -70,7 +78,7 @@ router.route('/:product_id')
     })
   })
 
-  .delete((request, response) => {
+  .delete(jwt({ secret: secret, issuer: 'https://api.kratelabs.com' }), (request, response) => {
     let product_id = request.params.product_id
     Product.findOne({id: product_id})
       .then(product => {
