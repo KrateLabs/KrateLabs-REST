@@ -6,8 +6,20 @@ import jwt from 'express-jwt'
 
 const router = express.Router()
 
-router.get('/', (request, response) => {
-  response.json({ message: 'Welcome to Kratelabs\'s api!'})
+router.route('/')
+  .get((request, response) => {
+    response.json({
+      api: 'Kratelabs',
+      ok: true,
+      status: 200,
+      message: 'Demonstrates the Kratelabs API',
+      http: [
+        { url: '/product', method: 'GET'},
+        { url: '/token', method: 'GET'},
+        { url: '/user', method: 'GET'}
+      ]
+    })
+  })
 })
 
 export default router
