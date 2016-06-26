@@ -1,0 +1,309 @@
+{
+	"id": "4f1bd245-277d-f72b-563e-e8f1bba8e857",
+	"name": "Kratelabs (live)",
+	"description": "",
+	"order": [
+		"54b91600-ea35-5ab3-5313-ac64bd02dac5",
+		"34b7acd9-2bc3-bb2d-7002-029ee443400d",
+		"ed52362a-80f0-3362-d73b-5861ec251c45",
+		"7794374a-011a-9f81-f9f2-532612a7bd6d",
+		"3b380637-72a3-e3e2-56c7-62ff26c763e5",
+		"8fde088c-203a-5ea5-b002-41dd95c7821a",
+		"9ba48dbf-85cb-de81-b844-62ce548bfb75",
+		"e8eacad1-5860-84de-1488-3bfda6ce9573",
+		"40a12caa-4c99-bd10-4ffe-243c3000c3c1"
+	],
+	"folders": [],
+	"timestamp": 1466387569283,
+	"owner": "685031",
+	"remoteLink": "",
+	"public": false,
+	"requests": [
+		{
+			"id": "34b7acd9-2bc3-bb2d-7002-029ee443400d",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiRGVuaXMiLCJlbWFpbCI6ImNhcnJpZXJlLmRlbmlzQGdtYWlsLmNvbSIsImlhdCI6MTQ2Njk2NTA1NywiZXhwIjoxNDk4NTAxMDU3LCJpc3MiOiJodHRwczovL2FwaS5rcmF0ZWxhYnMuY29tIn0.qdiEzhKIyXhdaav3LU6Tq1lnnQD17spKRKLjJitPzWk\n",
+			"url": "https://api.kratelabs.addxy.com/product",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "lat",
+					"value": "43.64305",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "lng",
+					"value": "-79.37412",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "zoom",
+					"value": "12.0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "bearing",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "pitch",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "carriere.denis@gmail.com",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "location",
+					"value": "Ottawa, ON",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "id",
+					"value": "12345",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466965207067,
+			"name": "Create Product (id=12345)",
+			"description": "",
+			"collectionId": "4f1bd245-277d-f72b-563e-e8f1bba8e857",
+			"responses": []
+		},
+		{
+			"id": "3b380637-72a3-e3e2-56c7-62ff26c763e5",
+			"headers": "",
+			"url": "https://api.kratelabs.addxy.com/product/12345",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;\ntests[\"Location\"] = jsonData.product.location === 'Toronto, ON';",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466387616970,
+			"name": "Get Product location (Toronto)",
+			"description": "",
+			"collectionId": "4f1bd245-277d-f72b-563e-e8f1bba8e857",
+			"responses": []
+		},
+		{
+			"id": "40a12caa-4c99-bd10-4ffe-243c3000c3c1",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiRGVuaXMiLCJlbWFpbCI6ImNhcnJpZXJlLmRlbmlzQGdtYWlsLmNvbSIsImlhdCI6MTQ2Njk2NTA1NywiZXhwIjoxNDk4NTAxMDU3LCJpc3MiOiJodHRwczovL2FwaS5rcmF0ZWxhYnMuY29tIn0.qdiEzhKIyXhdaav3LU6Tq1lnnQD17spKRKLjJitPzWk\n",
+			"url": "https://api.kratelabs.addxy.com/token/validate",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "grant_type",
+					"value": "client_credentials",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466965157022,
+			"name": "Validate Token",
+			"description": "",
+			"collectionId": "4f1bd245-277d-f72b-563e-e8f1bba8e857"
+		},
+		{
+			"id": "54b91600-ea35-5ab3-5313-ac64bd02dac5",
+			"headers": "",
+			"url": "https://api.kratelabs.addxy.com/product",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "lat",
+					"value": "43.64305",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "lng",
+					"value": "-79.37412",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "zoom",
+					"value": "12.0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "bearing",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "pitch",
+					"value": "0",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "carriere.denis@gmail.com",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466387598483,
+			"name": "Product API",
+			"description": "",
+			"collectionId": "4f1bd245-277d-f72b-563e-e8f1bba8e857",
+			"responses": []
+		},
+		{
+			"id": "7794374a-011a-9f81-f9f2-532612a7bd6d",
+			"headers": "",
+			"url": "https://api.kratelabs.addxy.com/product/12345",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "location",
+					"value": "Toronto, ON",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466387614338,
+			"name": "Update Product (location=Toronto)",
+			"description": "",
+			"collectionId": "4f1bd245-277d-f72b-563e-e8f1bba8e857",
+			"responses": []
+		},
+		{
+			"id": "8fde088c-203a-5ea5-b002-41dd95c7821a",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiRGVuaXMiLCJlbWFpbCI6ImNhcnJpZXJlLmRlbmlzQGdtYWlsLmNvbSIsImlhdCI6MTQ2Njk2NTA1NywiZXhwIjoxNDk4NTAxMDU3LCJpc3MiOiJodHRwczovL2FwaS5rcmF0ZWxhYnMuY29tIn0.qdiEzhKIyXhdaav3LU6Tq1lnnQD17spKRKLjJitPzWk\n",
+			"url": "https://api.kratelabs.addxy.com/product/12345",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466965189765,
+			"name": "Delete Product (id=12345)",
+			"description": "",
+			"collectionId": "4f1bd245-277d-f72b-563e-e8f1bba8e857",
+			"responses": []
+		},
+		{
+			"id": "9ba48dbf-85cb-de81-b844-62ce548bfb75",
+			"headers": "",
+			"url": "https://api.kratelabs.addxy.com/product/12345",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === false;\ntests[\"Status\"] = jsonData.status === 404;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466387625264,
+			"name": "Get Product (not found)",
+			"description": "Get Product (not found)",
+			"collectionId": "4f1bd245-277d-f72b-563e-e8f1bba8e857",
+			"responses": []
+		},
+		{
+			"id": "e8eacad1-5860-84de-1488-3bfda6ce9573",
+			"headers": "Authorization: Basic S3JhdGVsYWJzOktyYXRlbGFicw==\n",
+			"url": "https://api.kratelabs.addxy.com/token",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "grant_type",
+					"value": "client_credentials",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "user",
+					"value": "Denis",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "carriere.denis@gmail.com",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466965149458,
+			"name": "Generate Token",
+			"description": "",
+			"collectionId": "4f1bd245-277d-f72b-563e-e8f1bba8e857"
+		},
+		{
+			"id": "ed52362a-80f0-3362-d73b-5861ec251c45",
+			"headers": "",
+			"url": "https://api.kratelabs.addxy.com/product/12345",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"version": 2,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466387611011,
+			"name": "Get Product (id=12345)",
+			"description": "",
+			"collectionId": "4f1bd245-277d-f72b-563e-e8f1bba8e857",
+			"responses": []
+		}
+	]
+}

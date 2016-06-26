@@ -9,10 +9,12 @@
 		"1619f893-2377-509c-123f-8c8b5c474eb7",
 		"71e1ed7f-85b8-6ec5-d38f-aaaf9cf0af8d",
 		"99638150-2c7a-62fc-183e-2362c9c3287c",
-		"7a199a9c-dee2-477d-2aa4-67733001961b"
+		"fd523372-a753-7e88-ca16-ad510d03c6d1",
+		"7a199a9c-dee2-477d-2aa4-67733001961b",
+		"365da506-d22b-2c7e-4c51-826795404b0a"
 	],
 	"folders": [],
-	"timestamp": 1466264645093,
+	"timestamp": "2016-06-18T15:44:05.093Z",
 	"owner": "685031",
 	"remoteLink": "",
 	"public": false,
@@ -63,8 +65,34 @@
 			"responses": []
 		},
 		{
+			"id": "365da506-d22b-2c7e-4c51-826795404b0a",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiRGVuaXMiLCJlbWFpbCI6ImNhcnJpZXJlLmRlbmlzQGdtYWlsLmNvbSIsImlhdCI6MTQ2Njk1NjAwNywiZXhwIjoxNDk4NDkyMDA3LCJpc3MiOiJodHRwczovL2FwaS5rcmF0ZWxhYnMuY29tIn0.z6SnT03qOiDR59U73eK1MbOEcA0kmoTcMBFW4pTU8yI\n",
+			"url": "localhost:8000/token/validate",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": [
+				{
+					"key": "grant_type",
+					"value": "client_credentials",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1466961594486,
+			"name": "Validate Token",
+			"description": "",
+			"collectionId": "8b7f42a0-d380-4178-e3e5-fa32ea62826c",
+			"responses": []
+		},
+		{
 			"id": "71e1ed7f-85b8-6ec5-d38f-aaaf9cf0af8d",
-			"headers": "",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiRGVuaXMiLCJlbWFpbCI6ImNhcnJpZXJlLmRlbmlzQGdtYWlsLmNvbSIsImlhdCI6MTQ2Njk1NjEzMywiZXhwIjoxNDk4NDkyMTMzLCJpc3MiOiJodHRwczovL2FwaS5rcmF0ZWxhYnMuY29tIn0.KW3cSLqwNeVo5JQ851nD9dZ8CYc7fG1oEOZqIfDmrRs\n",
 			"url": "http://localhost:8000/product/12345",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -75,7 +103,7 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;\ntests[\"Location\"] = jsonData.product.location === 'Toronto, ON';",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1466371035842,
+			"time": 1466956580684,
 			"name": "Get Product location (Toronto)",
 			"description": "",
 			"collectionId": "8b7f42a0-d380-4178-e3e5-fa32ea62826c",
@@ -102,7 +130,7 @@
 		},
 		{
 			"id": "99638150-2c7a-62fc-183e-2362c9c3287c",
-			"headers": "",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiRGVuaXMiLCJlbWFpbCI6ImNhcnJpZXJlLmRlbmlzQGdtYWlsLmNvbSIsImlhdCI6MTQ2Njk1NjEzMywiZXhwIjoxNDk4NDkyMTMzLCJpc3MiOiJodHRwczovL2FwaS5rcmF0ZWxhYnMuY29tIn0.KW3cSLqwNeVo5JQ851nD9dZ8CYc7fG1oEOZqIfDmrRs\n",
 			"url": "http://localhost:8000/product/12345",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -113,7 +141,7 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1466371038675,
+			"time": 1466956559950,
 			"name": "Delete Product (id=12345)",
 			"description": "",
 			"collectionId": "8b7f42a0-d380-4178-e3e5-fa32ea62826c",
@@ -176,8 +204,46 @@
 			"responses": []
 		},
 		{
+			"folder": null,
+			"id": "fd523372-a753-7e88-ca16-ad510d03c6d1",
+			"name": "Generate Token",
+			"dataMode": "urlencoded",
+			"data": [
+				{
+					"key": "grant_type",
+					"value": "client_credentials",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "user",
+					"value": "Denis",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "email",
+					"value": "carriere.denis@gmail.com",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"rawModeData": null,
+			"descriptionFormat": null,
+			"description": "",
+			"headers": "Authorization: Basic S3JhdGVsYWJzOktyYXRlbGFicw==\n",
+			"method": "POST",
+			"pathVariables": {},
+			"url": "localhost:8000/token",
+			"preRequestScript": null,
+			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"collectionId": "8b7f42a0-d380-4178-e3e5-fa32ea62826c"
+		},
+		{
 			"id": "ff19df71-9005-acdc-06a7-91805e9d1f1a",
-			"headers": "",
+			"headers": "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiRGVuaXMiLCJlbWFpbCI6ImNhcnJpZXJlLmRlbmlzQGdtYWlsLmNvbSIsImlhdCI6MTQ2Njk1NjEzMywiZXhwIjoxNDk4NDkyMTMzLCJpc3MiOiJodHRwczovL2FwaS5rcmF0ZWxhYnMuY29tIn0.KW3cSLqwNeVo5JQ851nD9dZ8CYc7fG1oEOZqIfDmrRs\n",
 			"url": "http://localhost:8000/product",
 			"preRequestScript": null,
 			"pathVariables": {},
@@ -237,7 +303,7 @@
 			"tests": "var jsonData = JSON.parse(responseBody);\ntests[\"OK\"] = jsonData.ok === true;\ntests[\"Status\"] = jsonData.status === 200;",
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1466371025147,
+			"time": 1466956219476,
 			"name": "Create Product (id=12345)",
 			"description": "",
 			"collectionId": "8b7f42a0-d380-4178-e3e5-fa32ea62826c",
