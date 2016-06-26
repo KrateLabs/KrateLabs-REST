@@ -7,13 +7,13 @@
 ```bash
 $ git clone git@github.com:KrateLabs/KrateLabs-REST.git
 $ cd KrateLabs-REST
-$ docker-compose up
+$ npm start
 ```
 
-Using only Docker
+Using Docker
 
 ```bash
-$ docker run -d --name kratelabs -p 5000:5000 -v /home/ubuntu/.stormpath/:/root/.stormpath/ kratelabs
+$ docker run --rm -it -e "PORT=5000" -e "SECRET=default" -p 5000:5000 kratelabs
 ```
 
 Open your favorite browser to `http://localhost`

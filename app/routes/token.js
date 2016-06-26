@@ -18,6 +18,15 @@ router.route('/validate')
       email: request.user.email
     })
   })
+  .post(jwt({ secret: secret, issuer: 'https://api.kratelabs.com' }), (request, response) => {
+    return response.json({
+      ok: true,
+      status: 200,
+      message: 'User validated',
+      user: request.user.user,
+      email: request.user.email
+    })
+  })
 
 // Validate Authorization
 router.route('/')
@@ -49,6 +58,20 @@ router.route('/')
   })
 
 router.route('/')
+  .get((request, response) => {
+    response.json({
+      api: 'Token',
+      ok: true,
+      status: 200,
+      message: 'Demonstrates the Token API',
+      http: [
+        { url: '/token', method: 'GET'},
+        { url: '/token', method: 'POST', fields: ['user', 'email', 'client_credentials']},
+        { url: '/token/validate', method: 'GET'},
+        { url: '/token/validate', method: 'POST'}
+      ]
+    })
+  })
   .post((request, response) => {
     let token = new Token(request.body)
     let error = token.validateSync()
