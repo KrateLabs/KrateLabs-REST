@@ -2,7 +2,6 @@ import express from 'express'
 import multer from 'multer'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
-import stormpath from 'express-stormpath'
 import jwt from 'express-jwt'
 import routes from './app/routes'
 import models from './app/models'
@@ -15,13 +14,6 @@ const app = express()
 app.use(bodyParser.json())
 app.set('json spaces', 2)
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(stormpath.init(app, {
-  web: {
-    login: {
-      enabled: true
-    }
-  }
-}))
 app.set('trust proxy', true)
 
 // Set up Database
@@ -60,10 +52,7 @@ app.use((error, request, response, next) => {
   next()
 })
 
-app.on('stormpath.ready', () => {
-  app.listen(port)
-  console.log(`Stormpath Credentials active`)
-  console.log(`MongoDB connected to: ${ mongodb }`)
-  console.log(`Kratelabs API HTTP port: ${ port }`)
-  console.log(`Kratelabs JWT secret: ${ secret }`)
-})
+app.listen(port)
+console.log(`MongoDB connected to: ${ mongodb }`)
+console.log(`Kratelabs HTTP [PORT]: ${ port }`)
+console.log(`Kratelabs JWT [SECRET]: ${ secret }`)
