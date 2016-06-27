@@ -3,13 +3,13 @@ import { Base64 } from 'js-base64'
 import express from 'express'
 import jwt from 'express-jwt'
 import { sign } from 'jsonwebtoken'
-import { secret } from '../../config'
+import { SECRET } from '../../config'
 import { Token } from '../models'
 
 const router = express.Router()
 
 router.route('/validate')
-  .get(jwt({ secret: secret, issuer: 'https://api.kratelabs.com' }), (request, response) => {
+  .get(jwt({ secret: SECRET, issuer: 'https://api.kratelabs.com' }), (request, response) => {
     return response.json({
       ok: true,
       status: 200,
@@ -18,7 +18,7 @@ router.route('/validate')
       email: request.user.email
     })
   })
-  .post(jwt({ secret: secret, issuer: 'https://api.kratelabs.com' }), (request, response) => {
+  .post(jwt({ secret: SECRET, issuer: 'https://api.kratelabs.com' }), (request, response) => {
     return response.json({
       ok: true,
       status: 200,
@@ -89,7 +89,7 @@ router.route('/')
       return response.json({
         status: 200,
         ok: true,
-        token: sign(payload, secret, options),
+        token: sign(payload, SECRET, options),
         message: 'Generated Token'
       })
     }

@@ -15,7 +15,7 @@ export default class AWS {
   }
 }
 
-export default class S3 {
+class S3 {
   constructor({ bucket='', uri='', recursive=false } = {}) {
     this.bucket = bucket
     this.uri = uri
@@ -85,6 +85,7 @@ export default class S3 {
 }
 
 if (require.main === module) {
+  console.log('main')
   const aws = new AWS.S3({ bucket: 's3://kratelabs.com', recursive: true })
   //aws.rm({ path: '/test' })
   //aws.ls({ path: '/test' })

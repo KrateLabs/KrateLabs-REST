@@ -1,11 +1,110 @@
 import express from 'express'
 import { exec } from 'child_process'
-import AWS from 'aws-sdk'
 import jwt from 'express-jwt'
-import { secret } from '../../config'
+import { SECRET } from '../../config'
 import { Product } from '../models'
+import Kratelabs from '../utils/Kratelabs'
+import AWS from '../utils/AWS'
+import Shopify from '../utils/Shopify'
 
 const router = express.Router()
+const aws = new AWS.S3({ bucket: 's3://api.kratelabs.com', recursive: true })
+const shopify = new Shopify({
+  apikey: '40676c7d883263065f21a0f02e926af4',
+  password: '1b94c846c093bee5ef1a14a65e066450'
+})
+const kratelabs = new Kratelabs({
+  access_token: 'pk.eyJ1IjoiYWRkeHkiLCJhIjoiY2lsdmt5NjZwMDFsdXZka3NzaGVrZDZtdCJ9.ZUE-LebQgHaBduVwL68IoQ',
+  style: 'mapbox://styles/addxy/cim6u5lfi00k2cwm23exyzjim'
+})
+
+function validateProduct(request, response, next) {
+  let product = new Product(request.body)
+  let error = product.validateSync()
+  if (error) {
+    return response.status(400).json(_.assignIn(error, { ok: false, status: 400 }))
+  }
+  if (!request.body.id) {
+    request.body.id = product._id
+    console.log(request.body.id)
+  }
+  next()
+}
+
+function validateToken(request, response, next) {
+  if (!request.user.email) {
+    return response.status(401).json({
+      ok: false,
+      status: 401,
+      message: 'Token invalid',
+      error: 'Missing email from Token'
+    })
+  }
+  next()
+}
+
+function createMapProduct(request, response, next) {
+  let product = new Product(request.body)
+
+  // Create Kratelab Image
+  kratelabs.create({
+    filename: `./uploads/products/${ product.id }/${ product.id }`,
+    lat: product.lat,
+    lng: product.lng,
+    zoom: product.zoom,
+    bearing: product.bearing,
+    pitch: product.pitch
+  })
+    .then(
+      data => next(),
+      error => {
+        return response.status(500).json({
+          status: 500,
+          ok: false,
+          message: 'Error creating product',
+          error: 'Error Kratelabs CLI'
+        })
+      })
+}
+
+function uploadAWS(request, response, next) {
+  let product = new Product(request.body)
+
+  aws.cp({
+    source: `./uploads/products/${ product.id }`,
+    target: `s3://api.kratelabs.com/products/${ product.id }`,
+    publicReadWrite: true
+  })
+    .then(
+      data => next(),
+      error => {
+        return response.status(500).json({
+          status: 500,
+          ok: false,
+          message: 'Error creating product',
+          error: 'Error AWS Upload'
+        })
+      })
+}
+
+function createShopifyProduct(request, response, next) {
+  let product = new Product(request.body)
+
+  shopify.createProduct({
+    name: product.id,
+    image: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }.png`
+  })
+    .then(
+      data => next(),
+      error => {
+        return response.status(500).json({
+          status: 500,
+          ok: false,
+          message: 'Error creating product',
+          error: 'Error Shopify API'
+        })
+      })
+}
 
 router.route('/')
   .get((request, response) => {
@@ -24,29 +123,32 @@ router.route('/')
     })
   })
 
-  .post(jwt({ secret: secret, issuer: 'https://api.kratelabs.com' }), (request, response) => {
-    if (!request.user.email) return res.sendStatus(401)
-
+  .post(jwt({ secret: SECRET, issuer: 'https://api.kratelabs.com' }), validateToken)
+  .post(validateProduct)
+  .post(createMapProduct)
+  .post(uploadAWS)
+  .post(createShopifyProduct)
+  .post((request, response, next) => {
     let product = new Product(request.body)
-    let error = product.validateSync()
-    if (error) { return response.status(400).json(_.assignIn(error, { ok: false, status: 400 })) }
 
-    // Use MongoDB ID by fallback
-    if (!product.id) { product.id = product._id }
-
+    // Save to DB
     product.save(error => {
       if (error) return response.status(500).json({
         status: 500,
         ok: false,
         message: 'Error creating product',
-        error: error
+        error: error.errmsg
       })
       response.json({
         status: 200,
         ok: true,
         id: product.id,
         message: `Product created`,
-        url: `/product/${ product.id }`
+        url: {
+          svg: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }.svg`,
+          shopify: `https://kratelabs.com/products/${ product.id }`,
+          api: `https://api.kratelabs.addxy.com/product/${ product.id }`
+        }
       })
     })
   })
@@ -73,12 +175,17 @@ router.route('/:product_id')
         status: 200,
         ok: true,
         id: product.id,
-        product: product
+        product: product,
+        url: {
+          svg: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }.svg`,
+          shopify: `https://kratelabs.com/products/${ product.id }`,
+          api: `https://api.kratelabs.addxy.com/product/${ product.id }`
+        }
       })
     })
   })
 
-  .delete(jwt({ secret: secret, issuer: 'https://api.kratelabs.com' }), (request, response) => {
+  .delete(jwt({ secret: SECRET, issuer: 'https://api.kratelabs.com' }), (request, response) => {
     let product_id = request.params.product_id
     Product.findOne({id: product_id})
       .then(product => {

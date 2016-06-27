@@ -1,6 +1,6 @@
 import 'isomorphic-fetch'
 import { Promise } from 'es6-promise'
-import { variants, options, product } from './kratelabs'
+import { variants, options, schemaProduct } from './ShopifyOptions'
 
 export default class Shopify {
   headers = new Headers({
@@ -9,7 +9,7 @@ export default class Shopify {
     'Access-Control-Allow-Origin': '*'
   });
 
-  constructor(apikey, password) {
+  constructor({ apikey, password } = {}) {
     this.apikey = apikey
     this.password = password
   }
@@ -36,7 +36,8 @@ export default class Shopify {
     })
   }
 
-  async createProduct(product) {
+  async createProduct({ name, image } = {}) {
+    let product = schemaProduct({ name: name, image: image })
     return new Promise((resolve, reject) => {
       let url = `https://${ this.apikey }:${ this.password }@krate-labs.myshopify.com/admin/products.json`
       let options = {
@@ -55,15 +56,20 @@ export default class Shopify {
   }
 }
 
-async function main() {
-  let apikey = '40676c7d883263065f21a0f02e926af4'
-  let password = '1b94c846c093bee5ef1a14a65e066450'
-  const shopify = new Shopify(apikey, password)
+if (require.main === module) {
+  const shopify = new Shopify({
+    apikey: '40676c7d883263065f21a0f02e926af4',
+    password: '1b94c846c093bee5ef1a14a65e066450'
+  })
 
   //shopify.listProducts()
   //  .then(products => console.log(products.products))
-  shopify.createProduct(product('Denis'))
-    .then(product => console.log(product))
-
+  shopify.createProduct({
+    name: 'Denis',
+    image: 'https://s3.amazonaws.com/api.kratelabs.com/products/57706c6de193ffbc0b129a4a/57706c6de193ffbc0b129a4a.png'
+  })
+    .then(
+      data => console.log(data.product.id),
+      error => console.log(error)
+    )
 }
-//main()
