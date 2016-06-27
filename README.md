@@ -10,6 +10,14 @@ $ cd KrateLabs-REST
 $ npm start
 ```
 
+Run as background process
+
+```bash
+$ nohup npm start &
+$ disown
+$ exit
+```
+
 Using Docker
 
 ```bash
