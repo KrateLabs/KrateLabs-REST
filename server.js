@@ -37,8 +37,6 @@ app.use(upload.array(), (request, response, next) => {
 // CORS Middleware
 app.use((request, response, next) => {
   response.header('Access-Control-Allow-Origin', '*')
-  response.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-  response.header('Access-Control-Allow-Headers', 'Content-Type,Authorization,Cache-Control,Accept,Foo')
   next()
 })
 
