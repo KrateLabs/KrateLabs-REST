@@ -53,7 +53,8 @@ function createMapProduct(request, response, next) {
     lng: product.lng,
     zoom: product.zoom,
     bearing: product.bearing,
-    pitch: product.pitch
+    pitch: product.pitch,
+    style: product.style
   })
     .then(
       data => next(),

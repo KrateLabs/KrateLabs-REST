@@ -22,6 +22,10 @@ let schema = new Schema({
     trim: true,
     index: true
   },
+  style: {
+    type: String,
+    trim: true
+  },
   location: {
     type: String,
     trim: true
