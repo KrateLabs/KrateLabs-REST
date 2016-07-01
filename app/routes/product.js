@@ -93,7 +93,7 @@ function createShopifyProduct(request, response, next) {
 
   shopify.createProduct({
     name: product.id,
-    image: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }.png`
+    image: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }`
   })
     .then(
       data => next(),

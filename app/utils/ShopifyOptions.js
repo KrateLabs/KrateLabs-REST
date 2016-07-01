@@ -2,12 +2,30 @@ export function schemaProduct({ name, image } = {}) {
   return {
     product: {
       title: (name) ? name : 'Automated Product',
-      body_html: '<p class="p1">Customize a map that is most meaningful to the family by laser etching the cottage, cabin or summer home location. Hang in the cottage itself, or at home as a reminder of those moments that mean so much. </p>\n<p>Choose from a variety of symbols to help identify the exact location on a map, where no one map is similar. </p>\n<p><span>Help your secondary home stand out from the rest. </span></p>\n<p class="p1"><strong>Material</strong><span> : Clear cast acrylic</span></p>\n<p><strong>Process</strong> : Reverse Laser Etched </p>\n<p><strong>Sizing Options : A2</strong> [18" x 24" ] or<strong> A1 </strong>[ 24" x 36" ]</p>\n<p><strong>Lighting : </strong>Low energy LED thin profile panel | 50, 000 LED hours </p>\n<p><strong>Weight</strong> : Approximately 6 lbs </p>\n<p><strong>Recommended Application</strong> : Low cost and energy efficient ambient lighting for any room.</p>\n<p>Above the fireplace. </p>\n<p>* Comes standard with a North American outlet plug, other options are available upon request.</p>',
+      body_html: `<p class="p1">\
+                  Customize a map that is most meaningful to the family by laser \
+                  etching the cottage, cabin or summer home location. Hang in the \
+                  cottage itself, or at home as a reminder of those moments that \
+                  mean so much. </p>\n\
+                  <p> \
+                  Choose from a variety of symbols to help identify the exact \
+                  location on a map, where no one map is similar. \
+                  </p>\n<p> \
+                  <big>Help your secondary home stand out from the rest. </big></p>\n\
+                  <p class="p1"><strong>Material</strong><span> : Clear cast acrylic</span></p>\n\
+                  <p><strong>Process</strong> : Reverse Laser Etched </p>\n\
+                  <p><strong>Sizing Options : A2</strong> [18" x 24" ] or<strong> A1 </strong>[ 24" x 36" ]</p>\n\
+                  <p><strong>Lighting : </strong>Low energy LED thin profile panel | 50, 000 LED hours </p>\n\
+                  <p><strong>Weight</strong> : Approximately 6 lbs </p>\n\
+                  <p><strong>Recommended Application</strong> : Low cost and energy efficient ambient lighting for any room.</p>\n\
+                  <p><strong>Images : <a href=${ image }.png>PNG</a>, <a href=${ image }.svg>SVG</a>
+                  <p>Above the fireplace. </p>\n\
+                  <p>* Comes standard with a North American outlet plug, other options are available upon request.</p>`,
       vendor: 'Krate Labs',
       published: true,
       product_type: 'Automated Illuminated Map',
       tags: 'Custom, Etched, Illuminated, Laser, Laser Cut, Light Panel, Lightbox, Map',
-      images: [{ src: image }],
+      images: [{ src: `${ image }.png` }],
       options: options,
       published_scope: 'global',
       template_suffix: '',
