@@ -22,10 +22,8 @@ let schema = new Schema({
     trim: true,
     index: true
   },
-  style: {
-    type: String,
-    trim: true
-  },
+  style: String,
+  shopify: String,
   location: {
     type: String,
     trim: true

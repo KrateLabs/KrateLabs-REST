@@ -71,7 +71,7 @@ if (require.main === module) {
     image: 'https://s3.amazonaws.com/api.kratelabs.com/products/57706c6de193ffbc0b129a4a/57706c6de193ffbc0b129a4a.png'
   })
     .then(
-      data => console.log(data),
+      data => console.log(data.product.id),
       error => console.log(error)
     )
 }

@@ -41,7 +41,7 @@ export const options = [
   },
   { name: 'Material',
     position: 2,
-    values: ['Photo Film', 'Acrylic']
+    values: ['Acrylic', 'Photo Film']
   },
   { name: 'Color',
     position: 3,

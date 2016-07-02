@@ -129,7 +129,10 @@ function createShopifyProduct(request, response, next) {
     image: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }`
   })
     .then(
-      data => next(),
+      data => {
+        request.body.shopify = data.product.id
+        next()
+      },
       error => {
         return response.status(500).json({
           status: 500,
@@ -178,6 +181,7 @@ router.route('/')
         ok: true,
         id: product.id,
         message: `Product created`,
+        shopify: product.shopify,
         url: {
           svg: {
             full: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }-full.svg`,
@@ -216,7 +220,12 @@ router.route('/:product_id')
         id: product.id,
         product: product,
         url: {
-          svg: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }.svg`,
+          svg: {
+            full: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }-full.svg`,
+            roads: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }-roads.svg`,
+            water: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }-water.svg`,
+            buildings: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }-buildings.svg`,
+          },
           shopify: `https://kratelabs.com/products/${ product.id }`,
           api: `https://api.kratelabs.addxy.com/product/${ product.id }`
         }
