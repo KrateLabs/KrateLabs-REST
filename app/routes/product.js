@@ -89,7 +89,7 @@ async function createMapProduct(request, response, next) {
 
   // Create Buildings Kratelab Style
   let buildings = await kratelabs.create({
-    filename: `./uploads/products/${ product.id }/${ product.id }-building`,
+    filename: `./uploads/products/${ product.id }/${ product.id }-buildings`,
     lat: product.lat,
     lng: product.lng,
     zoom: product.zoom,
