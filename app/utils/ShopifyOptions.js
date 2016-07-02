@@ -25,7 +25,7 @@ export function schemaProduct({ name, image } = {}) {
       published: true,
       product_type: 'Automated Illuminated Map',
       tags: 'Custom, Etched, Illuminated, Laser, Laser Cut, Light Panel, Lightbox, Map',
-      images: [{ src: `${ image }.png` }],
+      images: [{ src: `${ image }-full.png` }],
       options: options,
       published_scope: 'global',
       template_suffix: '',
