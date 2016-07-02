@@ -53,7 +53,7 @@ async function createMapProduct(request, response, next) {
   }
   // Create Full Kratelab Style
   let full = await kratelabs.create({
-    filename: `./uploads/products/${ product.id }/full-${ product.id }`,
+    filename: `./uploads/products/${ product.id }/${ product.id }-full`,
     lat: product.lat,
     lng: product.lng,
     zoom: product.zoom,
@@ -65,7 +65,7 @@ async function createMapProduct(request, response, next) {
 
   // Create Water Kratelab Style
   let water = await kratelabs.create({
-    filename: `./uploads/products/${ product.id }/water-${ product.id }`,
+    filename: `./uploads/products/${ product.id }/${ product.id }-water`,
     lat: product.lat,
     lng: product.lng,
     zoom: product.zoom,
@@ -77,7 +77,7 @@ async function createMapProduct(request, response, next) {
 
   // Create Roads Kratelab Style
   let roads = await kratelabs.create({
-    filename: `./uploads/products/${ product.id }/roads-${ product.id }`,
+    filename: `./uploads/products/${ product.id }/${ product.id }-roads`,
     lat: product.lat,
     lng: product.lng,
     zoom: product.zoom,
@@ -89,7 +89,7 @@ async function createMapProduct(request, response, next) {
 
   // Create Buildings Kratelab Style
   let buildings = await kratelabs.create({
-    filename: `./uploads/products/${ product.id }/buildings-${ product.id }`,
+    filename: `./uploads/products/${ product.id }/${ product.id }-building`,
     lat: product.lat,
     lng: product.lng,
     zoom: product.zoom,
@@ -180,10 +180,10 @@ router.route('/')
         message: `Product created`,
         url: {
           svg: {
-            full: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/full-${ product.id }.svg`,
-            roads: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/roads-${ product.id }.svg`,
-            water: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/water-${ product.id }.svg`,
-            buildings: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/buildings-${ product.id }.svg`,
+            full: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }-full.svg`,
+            roads: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }-roads.svg`,
+            water: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }-water.svg`,
+            buildings: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }-buildings.svg`,
           },
           shopify: `https://kratelabs.com/products/${ product.id }`,
           api: `https://api.kratelabs.addxy.com/product/${ product.id }`
