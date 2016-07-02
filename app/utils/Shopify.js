@@ -2,6 +2,11 @@ import 'isomorphic-fetch'
 import { Promise } from 'es6-promise'
 import { variants, options, schemaProduct } from './ShopifyOptions'
 
+function checkErrors(data) {
+  if (data.errors) { return Promise.reject(data) }
+  return data
+}
+
 export default class Shopify {
   headers = new Headers({
     'Accept': 'application/json',
@@ -19,40 +24,37 @@ export default class Shopify {
     return response
   }
 
-  async listProducts() {
-    return new Promise((resolve, reject) => {
-      let url = `https://${ this.apikey }:${ this.password }@krate-labs.myshopify.com/admin/products.json`
-      let options = {
-        method: 'get',
-        headers: this.headers,
-        credentials: 'include',
-        mode: 'cors',
-        cache: 'default'
-      }
-      fetch(url, options)
-        .then(this.checkStatus)
-        .then(response => response.json())
-        .then(data => resolve(data))
-    })
+  listProducts() {
+    let url = `https://${ this.apikey }:${ this.password }@krate-labs.myshopify.com/admin/products.json`
+    let options = {
+      method: 'get',
+      headers: this.headers,
+      credentials: 'include',
+      mode: 'cors',
+      cache: 'default'
+    }
+    return fetch(url, options)
+      .then(this.checkStatus)
+      .then(response => response.json())
+      .then(data => data)
   }
 
-  async createProduct({ name, image } = {}) {
+  createProduct({ name, image } = {}) {
     let product = schemaProduct({ name: name, image: image })
-    return new Promise((resolve, reject) => {
-      let url = `https://${ this.apikey }:${ this.password }@krate-labs.myshopify.com/admin/products.json`
-      let options = {
-        method: 'post',
-        headers: this.headers,
-        credentials: 'include',
-        mode: 'cors',
-        cache: 'default',
-        body: JSON.stringify(product)
-      }
-      fetch(url, options)
-        .then(this.checkStatus)
-        .then(response => response.json())
-        .then(data => resolve(data))
-    })
+    let url = `https://${ this.apikey }:${ this.password }@krate-labs.myshopify.com/admin/products.json`
+    let options = {
+      method: 'post',
+      headers: this.headers,
+      credentials: 'include',
+      mode: 'cors',
+      cache: 'default',
+      body: JSON.stringify(product)
+    }
+    return fetch(url, options)
+      .then(this.checkStatus)
+      .then(response => response.json())
+      .then(checkErrors)
+      .then(data => data)
   }
 }
 
@@ -69,7 +71,7 @@ if (require.main === module) {
     image: 'https://s3.amazonaws.com/api.kratelabs.com/products/57706c6de193ffbc0b129a4a/57706c6de193ffbc0b129a4a.png'
   })
     .then(
-      data => console.log(data.product.id),
+      data => console.log(data),
       error => console.log(error)
     )
 }
