@@ -35,7 +35,7 @@ export default class Kratelabs {
       lng,
       zoom,
       bearing=0,
-      pitch=0} = {}) {
+      pitch=0 } = {}) {
     return new Promise((resolve, reject) => {
       let command = parseCommand([
         'kratelabs',
@@ -48,9 +48,9 @@ export default class Kratelabs {
         `${ pitch ? `--pitch ${ pitch }` : '' }`,
         `${ style ? `--style ${ style }` : '' }`
       ])
-      exec(command, (error, stdout, stderr) => {
-        if (stdout.trim() !== 'OK') { reject(stderr) }
-        resolve(stdout.trim())
+      return exec(command, (error, stdout, stderr) => {
+        if (stdout.trim() !== 'OK') { reject({ ok: false, message: stderr }) }
+        resolve({ ok: true, message: stdout.trim() })
       })
     })
   }

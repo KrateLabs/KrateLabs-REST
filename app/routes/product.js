@@ -43,29 +43,62 @@ function validateToken(request, response, next) {
   next()
 }
 
-function createMapProduct(request, response, next) {
+async function createMapProduct(request, response, next) {
   let product = new Product(request.body)
-
-  // Create Kratelab Image
-  kratelabs.create({
-    filename: `./uploads/products/${ product.id }/${ product.id }`,
+  let error = {
+    status: 500,
+    ok: false,
+    message: 'Error creating product',
+    error: 'Error Kratelabs CLI'
+  }
+  // Create Full Kratelab Style
+  let full = await kratelabs.create({
+    filename: `./uploads/products/${ product.id }/full-${ product.id }`,
     lat: product.lat,
     lng: product.lng,
     zoom: product.zoom,
     bearing: product.bearing,
     pitch: product.pitch,
-    style: product.style
+    style: 'mapbox://styles/addxy/ciq40e6zx0010bkmbbo513b6s'
   })
-    .then(
-      data => next(),
-      error => {
-        return response.status(500).json({
-          status: 500,
-          ok: false,
-          message: 'Error creating product',
-          error: 'Error Kratelabs CLI'
-        })
-      })
+  if (!full.ok) { return response.status(500).json(error) }
+
+  // Create Water Kratelab Style
+  let water = await kratelabs.create({
+    filename: `./uploads/products/${ product.id }/water-${ product.id }`,
+    lat: product.lat,
+    lng: product.lng,
+    zoom: product.zoom,
+    bearing: product.bearing,
+    pitch: product.pitch,
+    style: 'mapbox://styles/addxy/ciq4i2skg000u7mnnpxcnpans'
+  })
+  if (!water.ok) { return response.status(500).json(error) }
+
+  // Create Roads Kratelab Style
+  let roads = await kratelabs.create({
+    filename: `./uploads/products/${ product.id }/roads-${ product.id }`,
+    lat: product.lat,
+    lng: product.lng,
+    zoom: product.zoom,
+    bearing: product.bearing,
+    pitch: product.pitch,
+    style: 'mapbox://styles/addxy/ciq4i55u1001sb1no242tfxeo'
+  })
+  if (!roads.ok) { return response.status(500).json(error) }
+
+  // Create Buildings Kratelab Style
+  let buildings = await kratelabs.create({
+    filename: `./uploads/products/${ product.id }/buildings-${ product.id }`,
+    lat: product.lat,
+    lng: product.lng,
+    zoom: product.zoom,
+    bearing: product.bearing,
+    pitch: product.pitch,
+    style: 'mapbox://styles/addxy/ciq4i1vdo001jb2niy9z38i9a'
+  })
+  if (!buildings.ok) { return response.status(500).json(error) }
+  next()
 }
 
 function uploadAWS(request, response, next) {
@@ -146,7 +179,12 @@ router.route('/')
         id: product.id,
         message: `Product created`,
         url: {
-          svg: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/${ product.id }.svg`,
+          svg: {
+            full: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/full-${ product.id }.svg`,
+            roads: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/roads-${ product.id }.svg`,
+            water: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/water-${ product.id }.svg`,
+            buildings: `https://s3.amazonaws.com/api.kratelabs.com/products/${ product.id }/buildings-${ product.id }.svg`,
+          },
           shopify: `https://kratelabs.com/products/${ product.id }`,
           api: `https://api.kratelabs.addxy.com/product/${ product.id }`
         }
