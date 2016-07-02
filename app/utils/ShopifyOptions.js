@@ -18,7 +18,7 @@ export function schemaProduct({ name, image } = {}) {
                   <p><strong>Lighting : </strong>Low energy LED thin profile panel | 50, 000 LED hours </p>\n\
                   <p><strong>Weight</strong> : Approximately 6 lbs </p>\n\
                   <p><strong>Recommended Application</strong> : Low cost and energy efficient ambient lighting for any room.</p>\n\
-                  <p><strong>Images : <a href=${ image }.png>PNG</a>, <a href=${ image }.svg>SVG</a>
+                  <p><strong>Images (SVG) : <a href=${ image }-full.svg>Full</a>, <a href=${ image }-roads.svg>Roads</a>, <a href=${ image }-water.svg>Water</a>, <a href=${ image }-buildings.svg>Buildings</a>
                   <p>Above the fireplace. </p>\n\
                   <p>* Comes standard with a North American outlet plug, other options are available upon request.</p>`,
       vendor: 'Krate Labs',
