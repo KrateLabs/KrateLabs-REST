@@ -39,14 +39,14 @@ export const options = [
     position: 1,
     values: ['Medium', 'Large', 'X-Large']
   },
-  { name: 'Color',
+  { name: 'Material',
     position: 2,
+    values: ['Photo Film', 'Acrylic']
+  },
+  { name: 'Color',
+    position: 3,
     values: ['Black', 'White']
   },
-  { name: 'Material',
-    position: 3,
-    values: ['Photo Film', 'Acrylic']
-  }
 ]
 
 export const variants = []
@@ -61,8 +61,8 @@ let sizeFactor = {
   'X-Large': 650
 }
 options[0].values.map(size => {
-  options[1].values.map(color => {
-    options[2].values.map(material => {
+  options[1].values.map(material => {
+    options[2].values.map(color => {
       count ++
       let price = sizeFactor[size] * materialFactor[material]
       variants.push({
@@ -76,8 +76,8 @@ options[0].values.map(size => {
         fulfillment_service: 'manual',
         inventory_management: null,
         option1: size,
-        option2: color,
-        option3: material,
+        option2: material,
+        option3: color,
         taxable: true,
         barcode: '',
         image_id: null,

@@ -67,7 +67,7 @@ if (require.main === module) {
   //shopify.listProducts()
   //  .then(products => console.log(products.products))
   shopify.createProduct({
-    name: 'Denis',
+    name: 'Denis3',
     image: 'https://s3.amazonaws.com/api.kratelabs.com/products/57706c6de193ffbc0b129a4a/57706c6de193ffbc0b129a4a.png'
   })
     .then(
