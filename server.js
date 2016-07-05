@@ -46,6 +46,7 @@ app.use('/', routes.api)
 app.use('/user', routes.user)
 app.use('/token', routes.token)
 app.use('/product', routes.product)
+app.use('/github', routes.github)
 
 // Token Authentication
 app.use((error, request, response, next) => {

@@ -1,5 +1,4 @@
 import express from 'express'
-import { exec } from 'child_process'
 import jwt from 'express-jwt'
 import { SECRET } from '../../config'
 import { Product } from '../models'
