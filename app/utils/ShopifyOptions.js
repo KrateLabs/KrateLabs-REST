@@ -3,10 +3,10 @@ export function schemaProduct({ name, image } = {}) {
     product: {
       title: (name) ? name : 'Automated Product',
       body_html: `<p class="p1">\
-                  Customize a map that is most meaningful to the family by laser \
-                  etching the cottage, cabin or summer home location. Hang in the \
-                  cottage itself, or at home as a reminder of those moments that \
-                  mean so much. </p>\n\
+                  Congratulations, you’ve chosen a personalized location! \
+                  It will always be displayed as “black” land with “white” waterways. \
+                  Choose your options, add to cart and that's it! \
+                  </p>\n\
                   <p> \
                   Choose from a variety of symbols to help identify the exact \
                   location on a map, where no one map is similar. \
