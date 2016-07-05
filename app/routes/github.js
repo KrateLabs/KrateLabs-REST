@@ -15,7 +15,7 @@ const gitPull = (request, response) => {
       })
     }
     response.json({
-      status: 200,
+      status: 210,
       command: command,
       results: stdout.trim(),
       ok: true
