@@ -3,11 +3,21 @@ import { Promise } from 'es6-promise'
 import nock from 'nock'
 import Request from 'utils/Request'
 
-const API_URL = 'http://localhost:8080'
+const API_URL = 'http://localhost:5000'
 const user = {name: 'Denis', email: 'carriere.denis@gmail.com'}
 const userFail = {name: 'FAIL', email: 'failing@email.com'}
-const api = new Request(API_URL)
 
+test('Root API', t => {
+  return Request.get(`${ API_URL }/`)
+    .then(data => {
+      t.true(data.ok)
+      t.deepEqual(data.status, 200)
+    }, error => {
+      if (error) return t.ifError(error.message)
+    })
+})
+
+/*
 test('Create user', t => {
   return api.post('/user', user)
     .then(({ data, error }) => {
@@ -52,3 +62,4 @@ test('Delete user', t => {
       t.deepEqual(data.status, 200)
     })
 })
+*/
