@@ -9,7 +9,7 @@ script:
 notifications:
   webhooks:
     urls:
-      - http://your-domain.com/notifications
+      - https://api.kratelabs.addxy.com/github
     on_success: always
     on_failure: never
     on_start: never
