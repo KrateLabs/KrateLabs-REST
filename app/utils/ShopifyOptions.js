@@ -5,16 +5,12 @@ export function schemaProduct({ name, image } = {}) {
       body_html: `<p class="p1">\
                   Congratulations, you’ve chosen a personalized location! \
                   It will always be displayed as “black” land with “white” waterways. \
-                  Choose your options, add to cart and that's it! \
+                  Choose your options, add to cart and you're finished! \
                   </p>\n\
                   <p> \
-                  Choose from a variety of symbols to help identify the exact \
-                  location on a map, where no one map is similar. \
-                  </p>\n<p> \
-                  <big>Help your secondary home stand out from the rest. </big></p>\n\
                   <p class="p1"><strong>Material</strong><span> : Clear cast acrylic</span></p>\n\
                   <p><strong>Process</strong> : Reverse Laser Etched </p>\n\
-                  <p><strong>Sizing Options : A2</strong> [18" x 24" ] or <strong>A1</strong> [ 24" x 36" ] or <strong>A0</strong> [ 36" x 48" ]</p>\n\
+                  <p><strong>Sizing Options : Medium</strong> [18" x 24" ] or <strong>Large</strong> [ 24" x 36" ] or <strong>XL</strong> [ 36" x 48" ]</p>\n\
                   <p><strong>Lighting : </strong>Low energy LED thin profile panel | 50, 000 LED hours </p>\n\
                   <p><strong>Weight</strong> : Approximately 6 lbs </p>\n\
                   <p><strong>Recommended Application</strong> : Low cost and energy efficient ambient lighting for any room.</p>\n\
