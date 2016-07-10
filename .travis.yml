@@ -6,3 +6,12 @@ install:
 script:
   - npm run autostart
   - npm test
+notifications:
+  webhooks:
+    urls:
+      - http://your-domain.com/notifications
+    on_success: always
+    on_failure: never
+    on_start: never
+  email:
+    - carriere.denis@gmail.com
