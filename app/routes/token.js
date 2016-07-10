@@ -3,8 +3,8 @@ import { Base64 } from 'js-base64'
 import express from 'express'
 import jwt from 'express-jwt'
 import { sign } from 'jsonwebtoken'
-import { SECRET } from '../../config'
-import { Token } from '../models'
+import { SECRET } from '../config'
+import models, { Token } from '../models'
 
 const router = express.Router()
 

@@ -1,6 +1,5 @@
 import express from 'express'
-import { secret } from '../../config'
-import { } from '../models'
+import { secret } from '../config'
 import { sign } from 'jsonwebtoken'
 import jwt from 'express-jwt'
 

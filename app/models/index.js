@@ -1,4 +1,14 @@
-export User from './User'
-export Product from './Product'
-export Log from './Log'
-export Token from './Token'
+import user from './User'
+import product from './Product'
+import log from './Log'
+import token from './Token'
+
+const models = {
+  User: user,
+  Product: product,
+  Log: log,
+  Token: token
+}
+
+export const { User, Product, Log, Token } = models
+export default models

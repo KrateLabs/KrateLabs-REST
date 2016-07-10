@@ -4,7 +4,8 @@ let schema = new Schema({
   ip: String,
   url: String,
   method: String,
-  body: Object
+  body: Object,
+  auth: String
 })
 
 export default mongoose.model('Log', schema)
