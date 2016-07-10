@@ -1,5 +1,4 @@
 import 'isomorphic-fetch'
-import { Promise } from 'es6-promise'
 import base64 from 'base-64'
 import utf8 from 'utf8'
 import Request from './Request'

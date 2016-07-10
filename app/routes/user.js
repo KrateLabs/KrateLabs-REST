@@ -1,5 +1,5 @@
 import express from 'express'
-import models, { User } from '../models'
+import User from '../models'
 
 const router = express.Router()
 
@@ -84,7 +84,8 @@ router.route('/:user_id')
         user.remove((error, removed) => response.json({
           status: 200,
           ok: true,
-          message: `User ${ name } is removed`
+          message: `User ${ name } is removed`,
+          removed: removed
         }))
       })
   })

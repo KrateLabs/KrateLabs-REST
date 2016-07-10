@@ -1,5 +1,4 @@
 import { Promise } from 'es6-promise'
-import fetch from 'isomorphic-fetch'
 import { exec } from 'child_process'
 
 export function parseCommand(command) {

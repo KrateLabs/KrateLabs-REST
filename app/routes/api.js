@@ -1,7 +1,4 @@
 import express from 'express'
-import { secret } from '../config'
-import { sign } from 'jsonwebtoken'
-import jwt from 'express-jwt'
 
 const router = express.Router()
 

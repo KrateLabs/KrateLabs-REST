@@ -1,16 +1,14 @@
-import humps, { camelizeKeys, decamelizeKeys, decamelize } from 'humps'
-import { Promise } from 'es6-promise'
 import fetch from 'isomorphic-fetch'
 import base64 from 'base-64'
 import utf8 from 'utf8'
 import FormData from 'form-data'
 
-function encodeAccount(username, password) {
+export function encodeAccount(username, password) {
   let bytes = utf8.encode(`${ username }:${ password }`)
   return base64.encode(bytes)
 }
 
-function loadFormData(payload) {
+export function loadFormData(payload) {
   if (!payload) return undefined
   let data = new FormData()
   Object.keys(payload).map((key) => {
@@ -19,7 +17,7 @@ function loadFormData(payload) {
   return data
 }
 
-function loadFormUrlencoded(payload) {
+export function loadFormUrlencoded(payload) {
   if (!payload) return undefined
   let data = []
   Object.keys(payload).map((key) => {
@@ -28,24 +26,23 @@ function loadFormUrlencoded(payload) {
   return data.join('&')
 }
 
-function checkStatus(response) {
+export function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response
   } else {
-    return response
     var error = new Error(response.statusText)
     error.response = response
     throw error
   }
 }
 
-function parseJSON(response) {
+export function parseJSON(response) {
   let contentType = response.headers.get('content-type')
   if (contentType.match(/application\/json/)) return response.json()
   return response.text()
 }
 
-function request(url, {  method='get', endpoint, payload, params, authentication } = {}) {
+export function request(url, {  method='get', endpoint, payload, params, authentication } = {}) {
   if (endpoint) url += `${ endpoint }`
   if (params) url += `?${ loadFormUrlencoded(params) }`
 

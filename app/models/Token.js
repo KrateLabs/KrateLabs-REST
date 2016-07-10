@@ -1,5 +1,4 @@
 import mongoose, { Schema } from 'mongoose'
-import _ from 'lodash'
 import validator from 'validator'
 
 let schema = new Schema({

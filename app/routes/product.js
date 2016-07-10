@@ -1,7 +1,8 @@
 import express from 'express'
 import jwt from 'express-jwt'
+import _ from 'lodash'
 import { SECRET } from '../config'
-import models, { Product } from '../models'
+import { Product } from '../models'
 import Kratelabs from '../utils/Kratelabs'
 import AWS from '../utils/AWS'
 import Shopify from '../utils/Shopify'
@@ -109,15 +110,14 @@ function uploadAWS(request, response, next) {
     publicReadWrite: true
   })
     .then(
-      data => next(),
-      error => {
-        return response.status(500).json({
-          status: 500,
-          ok: false,
-          message: 'Error creating product',
-          error: 'Error AWS Upload'
-        })
-      })
+      data => { if (data) next() },
+      error => { if (error) response.status(500).json({
+        status: 500,
+        ok: false,
+        message: 'Error creating product',
+        error: 'Error AWS Upload'
+      })}
+    )
 }
 
 function createShopifyProduct(request, response, next) {
@@ -129,17 +129,16 @@ function createShopifyProduct(request, response, next) {
   })
     .then(
       data => {
-        request.body.shopify = data.product.id
+        if (data) { request.body.shopify = data.product.id }
         next()
       },
-      error => {
-        return response.status(500).json({
-          status: 500,
-          ok: false,
-          message: 'Error creating product',
-          error: 'Error Shopify API'
-        })
-      })
+      error => { if (error) response.status(500).json({
+        status: 500,
+        ok: false,
+        message: 'Error creating product',
+        error: 'Error Shopify API'
+      })}
+    )
 }
 
 router.route('/')
@@ -164,7 +163,7 @@ router.route('/')
   .post(createMapProduct)
   .post(uploadAWS)
   .post(createShopifyProduct)
-  .post((request, response, next) => {
+  .post((request, response) => {
     let product = new Product(request.body)
 
     // Save to DB
@@ -179,7 +178,7 @@ router.route('/')
         status: 200,
         ok: true,
         id: product.id,
-        message: `Product created`,
+        message: 'Product created',
         shopify: product.shopify,
         url: {
           svg: {
@@ -210,7 +209,7 @@ router.route('/:product_id')
         status: 404,
         ok: false,
         id: product_id,
-        message: `Product cannot be found`,
+        message: 'Product cannot be found',
         error: 'Product cannot be found',
       })
       response.json({
@@ -240,17 +239,19 @@ router.route('/:product_id')
           status: 404,
           ok: false,
           id: product_id,
-          message: `Product cannot be found`,
-          error: `Product cannot be found`
+          message: 'Product cannot be found',
+          error: 'Product cannot be found'
         })
-        product.remove((error, removed) => response.json({
-          status: 200,
-          ok: true,
-          id: product_id,
-          message: `Product removed`
-        }))
+        product.remove((error, removed) => {
+          if (removed) response.json({
+            status: 200,
+            ok: true,
+            id: product_id,
+            message: 'Product removed'
+          })
+        })
       })
-    })
+  })
 
   .post((request, response) => {
     let product_id = request.params.product_id
@@ -263,12 +264,12 @@ router.route('/:product_id')
         message: 'Error updating product with payload',
         error: 'Error updating product'
       })
-      if (!!!product.n) return response.status(404).json({
+      if (!product.n) return response.status(404).json({
         status: 404,
         ok: false,
         id: product_id,
-        message: `Product cannot be found`,
-        error: `Product cannot be found`
+        message: 'Product cannot be found',
+        error: 'Product cannot be found'
       })
       if (error) return response.status(500).json({
         status: 500,

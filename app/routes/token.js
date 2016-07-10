@@ -4,7 +4,7 @@ import express from 'express'
 import jwt from 'express-jwt'
 import { sign } from 'jsonwebtoken'
 import { SECRET } from '../config'
-import models, { Token } from '../models'
+import { Token } from '../models'
 
 const router = express.Router()
 

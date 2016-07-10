@@ -1,6 +1,6 @@
-import 'isomorphic-fetch'
+import fetch from 'isomorphic-fetch'
 import { Promise } from 'es6-promise'
-import { variants, options, schemaProduct } from './ShopifyOptions'
+import { schemaProduct } from './ShopifyOptions'
 
 function checkErrors(data) {
   if (data.errors) { return Promise.reject(data) }
@@ -8,13 +8,12 @@ function checkErrors(data) {
 }
 
 export default class Shopify {
-  headers = new Headers({
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
-  });
-
   constructor({ apikey, password } = {}) {
+    this.headers = new Headers({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    })
     this.apikey = apikey
     this.password = password
   }
