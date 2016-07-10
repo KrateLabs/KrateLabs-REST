@@ -8,7 +8,7 @@ router.route('/')
       api: 'Kratelabs',
       ok: true,
       status: 200,
-      message: 'Demonstrates the Kratelabs API, yay!',
+      message: 'Demonstrates the Kratelabs API, yay!!',
       http: [
         { url: '/product', method: 'GET'},
         { url: '/token', method: 'GET'},
