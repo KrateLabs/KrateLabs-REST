@@ -1,11 +1,7 @@
 import test from 'ava'
-import { Promise } from 'es6-promise'
-import nock from 'nock'
-import Request from 'utils/Request'
+import Request from '../app/utils/Request'
 
 const API_URL = 'http://localhost:5000'
-const user = {name: 'Denis', email: 'carriere.denis@gmail.com'}
-const userFail = {name: 'FAIL', email: 'failing@email.com'}
 
 test('Root API', t => {
   return Request.get(`${ API_URL }/`)
