@@ -3,6 +3,7 @@ import multer from 'multer'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import autoIncrement from 'mongoose-auto-increment'
+import useragent from 'express-useragent'
 import routes from './routes'
 import { Log } from './models'
 import { PORT, MONGODB, SECRET } from './config'
@@ -21,21 +22,22 @@ autoIncrement.initialize(mongoose.connection)
 
 // Logging Middleware
 const upload = multer({ dest: 'uploads/' })
-app.use(upload.array(), (request, response, next) => {
+app.use(upload.array(), (req, res, next) => {
   let log = new Log()
-  log.ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress
-  log.method = request.method
-  log.url = request.originalUrl
-  log.body = request.body
-  log.auth = request.headers.authorization
+  log.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  log.method = req.method
+  log.url = req.originalUrl
+  log.body = req.body
+  log.userAgent = useragent.parse(req.headers['user-agent'])
+  log.auth = req.headers.authorization
   console.log(log)
   next()
 })
 
 // CORS Middleware
-app.use((request, response, next) => {
-  response.header('Access-Control-Allow-Origin', '*')
-  response.header('Access-Control-Allow-Headers', 'Content-Type,Authorization,Cache-Control,Accept,Accept-Encoding')
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization,Cache-Control,Accept,Accept-Encoding')
   next()
 })
 
@@ -47,10 +49,10 @@ app.use('/product', routes.product)
 app.use('/github', routes.github)
 
 // Token Authentication
-app.use((error, request, response, next) => {
+app.use((error, req, res, next) => {
   console.log(error, 'error')
   if (error.name == 'UnauthorizedError') {
-    return response.status(401).json({
+    return res.status(401).json({
       ok: false,
       status: 401,
       message: 'Invalid Token',
