@@ -83,7 +83,7 @@ async function createMapProduct(request, response, next) {
     zoom: product.zoom,
     bearing: product.bearing,
     pitch: product.pitch,
-    style: 'mapbox://styles/addxy/ciq4kxagv0014banfo2989uep'
+    style: 'mapbox://styles/addxy/ciqvrp80a0004bgnozxogrbcj'
   })
   if (!roads.ok) { return response.status(500).json(error) }
 
