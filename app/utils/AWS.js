@@ -15,7 +15,7 @@ export default class AWS {
 }
 
 class S3 {
-  constructor({ bucket='', uri='', recursive=false } = {}) {
+  constructor({ bucket='', uri='', recursive=false, region='us-east-1' } = {}) {
     this.bucket = bucket
     this.uri = uri
     this.recursive = recursive
@@ -26,6 +26,7 @@ class S3 {
       path='',
       recursive=this.recursive,
       pageSize,
+      region=this.region,
       humanReadable=false,
       summarize=false } = {}) {
     if (!uri) { uri = `${ bucket }${ path }` }
@@ -36,7 +37,8 @@ class S3 {
         `${ recursive ? '--recursive' : '' }`,
         `${ humanReadable ? '--human-readable' : '' }`,
         `${ summarize ? '--summarize' : '' }`,
-        `${ pageSize ? `--page-size ${ pageSize }` : ''}`
+        `${ pageSize ? `--page-size ${ pageSize }` : ''}`,
+        `${ region ? `--region ${ region }`: ''}`
       ])
       exec(command, (error, stdout, stderr) => {
         if (error) { reject(stderr.trim()) }
