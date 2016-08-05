@@ -8,14 +8,16 @@ server {
 
     server_name api.kratelabs.com;
 
-    ssl_certificate     /etc/letsencrypt/live/api.kratelabs.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/api.kratelabs.com/privkey.pem;
+    ssl_certificate		/etc/letsencrypt/live/api.kratelabs.com/fullchain.pem;
+    ssl_certificate_key		/etc/letsencrypt/live/api.kratelabs.com/privkey.pem;
+    ssl_trusted_certificate     /etc/letsencrypt/live/api.kratelabs.com/fullchain.pem;
 
     location / {
-        proxy_pass http://kratelabs/;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass		http://kratelabs/;
+        proxy_set_header	Host $host;
+        proxy_set_header	X-Real-IP $remote_addr;
+        proxy_set_header	X-Forwarded-For $proxy_add_x_forwarded_for;
+	proxy_set_header        X-Firefox-Spdy h2;
     }
 }
 
@@ -28,8 +30,9 @@ server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
 
-    ssl_certificate     /etc/letsencrypt/live/api.kratelabs.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/api.kratelabs.com/privkey.pem;
+    ssl_certificate		/etc/letsencrypt/live/api.kratelabs.com/fullchain.pem;
+    ssl_certificate_key		/etc/letsencrypt/live/api.kratelabs.com/privkey.pem;
+    ssl_trusted_certificate     /etc/letsencrypt/live/api.kratelabs.com/fullchain.pem;
 
     server_name www.api.kratelabs.com;
     return 301 https://api.kratelabs.com$request_uri;
