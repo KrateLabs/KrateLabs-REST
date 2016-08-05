@@ -9,9 +9,9 @@
   "scripts": {
     "pretest": "npm run lint || true",
     "test": "ava --verbose",
-    "start": "./node_modules/.bin/nodemon ./node_modules/.bin/babel-node app/server.js",
-    "lint": "./node_modules/.bin/eslint app && ./node_modules/.bin/eslint test",
-    "autostart": "nohup ./node_modules/.bin/nodemon ./node_modules/.bin/babel-node app/server.js </dev/null &"
+    "start": "./node_modules/nodemon/bin/nodemon.js ./node_modules/babel-cli/bin/babel-node.js app/server.js",
+    "lint": "./node_modules/eslint/bin/eslint.js app && ./node_modules/eslint/bin/eslint.js test",
+    "autostart": "nohup ./node_modules/nodemon/bin/nodemon.js ./node_modules/babel-cli/bin/babel-node.js app/server.js </dev/null &"
   },
   "repository": {
     "type": "git",
