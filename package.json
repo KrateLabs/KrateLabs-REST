@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/KrateLabs/KrateLabs-REST#readme",
   "dependencies": {
-    "aws-sdk": "^2.4.0",
     "base-64": "^0.1.0",
     "body-parser": "^1.15.1",
     "core-js": "^2.4.0",
@@ -40,8 +39,6 @@
     "mongoose-auto-increment": "^5.0.1",
     "multer": "^1.1.0",
     "node-uuid": "^1.4.7",
-    "request-promise": "^4.1.0",
-    "stormpath": "^0.18.2",
     "utf8": "^2.1.1",
     "validator": "^5.4.0"
   },
