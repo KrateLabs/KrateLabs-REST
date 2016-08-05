@@ -3,7 +3,6 @@ import multer from 'multer'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import autoIncrement from 'mongoose-auto-increment'
-import useragent from 'express-useragent'
 import routes from './routes'
 import { Log } from './models'
 import { PORT, MONGODB, SECRET } from './config'
@@ -28,7 +27,6 @@ app.use(upload.array(), (req, res, next) => {
   log.method = req.method
   log.url = req.originalUrl
   log.body = req.body
-  log.userAgent = useragent.parse(req.headers['user-agent'])
   log.auth = req.headers.authorization
   console.log(log)
   next()

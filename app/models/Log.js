@@ -5,8 +5,7 @@ let schema = new Schema({
   url: String,
   method: String,
   body: Object,
-  auth: String,
-  userAgent: Object
+  auth: String
 })
 
 export default mongoose.model('Log', schema)

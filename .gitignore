@@ -9,6 +9,7 @@ __pycache__/
 # C extensions
 *.so
 
+typings
 # Distribution / packaging
 .Python
 env/
