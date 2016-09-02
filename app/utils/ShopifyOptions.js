@@ -47,20 +47,23 @@ export const options = [
 
 export const variants = []
 let count = 0
-let materialFactor = {
-  'Photo Film': 0.5,
-  'Acrylic': 1
-}
-let sizeFactor = {
-  'Medium': 450,
-  'Large': 550,
-  'X-Large': 650
+const prices = {
+  'Photo Film': {
+    'Medium': 400,
+    'Large': 600,
+    'X-Large': 800
+  },
+  'Acrylic': {
+    'Medium': 500,
+    'Large': 800,
+    'X-Large': 1200
+  }
 }
 options[0].values.map(size => {
   options[1].values.map(material => {
     options[2].values.map(color => {
       count ++
-      let price = sizeFactor[size] * materialFactor[material]
+      const price = prices[material][size]
       variants.push({
         title: `${ size } / ${ color } / ${ material }`,
         price: price,

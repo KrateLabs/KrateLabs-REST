@@ -8,14 +8,14 @@ function checkErrors(data) {
 }
 
 export default class Shopify {
-  headers = new Headers({
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
-  })
   constructor({ apikey, password } = {}) {
     this.apikey = apikey
     this.password = password
+    this.headers = new Headers({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    })
   }
 
   static checkStatus(response) {
