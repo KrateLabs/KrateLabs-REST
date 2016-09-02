@@ -5,7 +5,7 @@ const router = express.Router()
 router.route('/')
   .get((request, response) => {
     response.json({
-      api: 'Kratelabs',
+      api: 'Kratelabs v1.1.0',
       ok: true,
       status: 200,
       message: 'Demonstrates the Kratelabs API, yay!!',
