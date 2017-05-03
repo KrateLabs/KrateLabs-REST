@@ -174,33 +174,22 @@ router.route('/')
   .post((request, response) => {
     let product = new Product(request.body)
 
-    // Save to DB
-    product.save(error => {
-      if (error) {
-        return response.status(500).json({
-          status: 500,
-          ok: false,
-          message: 'Error creating product',
-          error: error.errmsg
-        })
+    response.json({
+      status: 200,
+      ok: true,
+      id: product.id,
+      message: 'Product created',
+      shopify: product.shopify,
+      url: {
+        svg: {
+          full: `https://s3.amazonaws.com/api.kratelabs.com/products/${product.id}/${product.id}-full.svg`,
+          roads: `https://s3.amazonaws.com/api.kratelabs.com/products/${product.id}/${product.id}-roads.svg`,
+          water: `https://s3.amazonaws.com/api.kratelabs.com/products/${product.id}/${product.id}-water.svg`,
+          buildings: `https://s3.amazonaws.com/api.kratelabs.com/products/${product.id}/${product.id}-buildings.svg`
+        },
+        shopify: 'https://kratelabs.com/products/' + product.id,
+        api: 'https://api.kratelabs.addxy.com/product/' + product.id
       }
-      response.json({
-        status: 200,
-        ok: true,
-        id: product.id,
-        message: 'Product created',
-        shopify: product.shopify,
-        url: {
-          svg: {
-            full: `https://s3.amazonaws.com/api.kratelabs.com/products/${product.id}/${product.id}-full.svg`,
-            roads: `https://s3.amazonaws.com/api.kratelabs.com/products/${product.id}/${product.id}-roads.svg`,
-            water: `https://s3.amazonaws.com/api.kratelabs.com/products/${product.id}/${product.id}-water.svg`,
-            buildings: `https://s3.amazonaws.com/api.kratelabs.com/products/${product.id}/${product.id}-buildings.svg`
-          },
-          shopify: 'https://kratelabs.com/products/' + product.id,
-          api: 'https://api.kratelabs.addxy.com/product/' + product.id
-        }
-      })
     })
   })
 
