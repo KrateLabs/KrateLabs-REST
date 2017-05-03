@@ -14,7 +14,7 @@ const shopify = new Shopify({
   password: '1b94c846c093bee5ef1a14a65e066450'
 })
 const kratelabs = new Kratelabs({
-  access_token: 'pk.eyJ1IjoiYWRkeHkiLCJhIjoiY2lsdmt5NjZwMDFsdXZka3NzaGVrZDZtdCJ9.ZUE-LebQgHaBduVwL68IoQ',
+  access_token: 'sk.eyJ1IjoiYWRkeHkiLCJhIjoiY2oyODhrYjc5MDA3bjJxbWtlN2tmdWs1bCJ9.6l5m1RhxKacZ1-H7L1gxog',
   style: 'mapbox://styles/addxy/cim6u5lfi00k2cwm23exyzjim'
 })
 
