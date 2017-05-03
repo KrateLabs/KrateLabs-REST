@@ -1,9 +1,9 @@
-import express from 'express'
 import multer from 'multer'
+import express from 'express'
 import bodyParser from 'body-parser'
-import routes from './routes'
-import { Log } from './models'
-import { PORT, SECRET } from './config'
+import routes from './app/routes'
+import { Log } from './app/models'
+import config, { PORT, SECRET } from './app/config'
 
 // Set up Server
 const app = express()
@@ -55,5 +55,6 @@ app.use((error, req, res, next) => {
 })
 
 app.listen(PORT)
-console.log(`Kratelabs HTTP [PORT]: ${ PORT }`)
-console.log(`Kratelabs JWT [SECRET]: ${ SECRET }`)
+console.log(`Kratelabs HTTP [PORT]: ${PORT}`)
+console.log(`Kratelabs JWT [SECRET]: ${SECRET}`)
+console.log('config', config)

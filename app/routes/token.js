@@ -1,10 +1,10 @@
-import _ from 'lodash'
-import { Base64 } from 'js-base64'
-import express from 'express'
 import jwt from 'express-jwt'
+import express from 'express'
 import { sign } from 'jsonwebtoken'
-import { SECRET } from '../config'
+import { assignIn } from 'lodash'
+import { Base64 } from 'js-base64'
 import { Token } from '../models'
+import { SECRET } from '../config'
 
 const router = express.Router()
 
@@ -75,7 +75,7 @@ router.route('/')
   .post((request, response) => {
     let token = new Token(request.body)
     let error = token.validateSync()
-    if (error) { return response.status(400).json(_.assignIn(error, { ok: false, status: 400 })) }
+    if (error) { return response.status(400).json(assignIn(error, { ok: false, status: 400 })) }
 
     if (token.grant_type == 'client_credentials') {
       let payload = {

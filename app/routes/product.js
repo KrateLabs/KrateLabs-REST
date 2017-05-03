@@ -1,11 +1,11 @@
 import express from 'express'
 import jwt from 'express-jwt'
-import _ from 'lodash'
+import { assignIn } from 'lodash'
 import { SECRET, SHOPIFY_API_KEY, SHOPIFY_PASSWORD, MAPBOX_ACCESS_TOKEN } from '../config'
-import { Product } from '../models'
-import Kratelabs from '../utils/Kratelabs'
 import AWS from '../utils/AWS'
 import Shopify from '../utils/Shopify'
+import Kratelabs from '../utils/Kratelabs'
+import { Product } from '../models'
 
 const router = express.Router()
 const aws = new AWS.S3({ bucket: 's3://api.kratelabs.com', recursive: true })
@@ -22,7 +22,7 @@ function validateProduct(request, response, next) {
   let product = new Product(request.body)
   let error = product.validateSync()
   if (error) {
-    return response.status(400).json(_.assignIn(error, { ok: false, status: 400 }))
+    return response.status(400).json(assignIn(error, { ok: false, status: 400 }))
   }
   if (!request.body.id) {
     request.body.id = product._id
