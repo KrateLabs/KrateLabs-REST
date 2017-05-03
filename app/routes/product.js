@@ -1,7 +1,7 @@
 import express from 'express'
 import jwt from 'express-jwt'
 import _ from 'lodash'
-import { SECRET } from '../config'
+import { SECRET, SHOPIFY_API_KEY, SHOPIFY_PASSWORD, MAPBOX_ACCESS_TOKEN } from '../config'
 import { Product } from '../models'
 import Kratelabs from '../utils/Kratelabs'
 import AWS from '../utils/AWS'
@@ -10,11 +10,11 @@ import Shopify from '../utils/Shopify'
 const router = express.Router()
 const aws = new AWS.S3({ bucket: 's3://api.kratelabs.com', recursive: true })
 const shopify = new Shopify({
-  apikey: '40676c7d883263065f21a0f02e926af4',
-  password: '1b94c846c093bee5ef1a14a65e066450'
+  apikey: SHOPIFY_API_KEY,
+  password: SHOPIFY_PASSWORD
 })
 const kratelabs = new Kratelabs({
-  access_token: 'sk.eyJ1IjoiYWRkeHkiLCJhIjoiY2oyODhrYjc5MDA3bjJxbWtlN2tmdWs1bCJ9.6l5m1RhxKacZ1-H7L1gxog',
+  access_token: MAPBOX_ACCESS_TOKEN,
   style: 'mapbox://styles/addxy/cim6u5lfi00k2cwm23exyzjim'
 })
 

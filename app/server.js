@@ -1,11 +1,9 @@
 import express from 'express'
 import multer from 'multer'
 import bodyParser from 'body-parser'
-import mongoose from 'mongoose'
-import autoIncrement from 'mongoose-auto-increment'
 import routes from './routes'
 import { Log } from './models'
-import { PORT, MONGODB, SECRET } from './config'
+import { PORT, SECRET } from './config'
 
 // Set up Server
 const app = express()
@@ -14,10 +12,6 @@ app.use(bodyParser.json())
 app.set('json spaces', 2)
 app.use(bodyParser.urlencoded({ extended: true }))
 app.set('trust proxy', true)
-
-// Set up Database
-mongoose.connect(MONGODB)
-autoIncrement.initialize(mongoose.connection)
 
 // Logging Middleware
 const upload = multer({ dest: 'uploads/' })
@@ -61,6 +55,5 @@ app.use((error, req, res, next) => {
 })
 
 app.listen(PORT)
-console.log(`MongoDB connected to: ${ MONGODB }`)
 console.log(`Kratelabs HTTP [PORT]: ${ PORT }`)
 console.log(`Kratelabs JWT [SECRET]: ${ SECRET }`)
