@@ -4,7 +4,8 @@
   "description": "Kratelabs API",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node index.js"
+    "start": "babel-node index.js",
+    "autostart": "nohup babel-node index.js </dev/null &"
   },
   "author": "Denis Carriere <@DenisCarriere>",
   "license": "MIT",
