@@ -6,13 +6,13 @@ let schema = new Schema({
     type: String,
     required: 'Grant Type is required',
     trim: true,
-    lowercase: true,
+    lowercase: true
   },
   email: {
     type: String,
     required: 'Email address is required',
     lowercase: true,
-    trim: true,
+    trim: true
   },
   user: {
     type: String,

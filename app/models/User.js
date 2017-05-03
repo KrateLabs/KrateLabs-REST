@@ -4,7 +4,7 @@ let schema = new Schema({
   name: {
     type: String,
     required: 'Name is required',
-    trim: true,
+    trim: true
   },
   email: {
     type: String,
